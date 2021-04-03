@@ -77,7 +77,7 @@ def contigency_chi2_test(
         # 4) Filtering expected values smaller then 5
         for g in list_groups_interest:
             df_results = df_results\
-                .loc[df_results[str_obs_values.format(s=g)] >= 5]
+                .loc[df_results[str_col_expected.format(s=g)] >= 5]
 
         return (stats_chi2_result, df_results)
     except Exception as e:
@@ -88,7 +88,7 @@ def contigency_chi2_test(
 
 
 @typechecked
-def compute_pairwise_mannwhitney(
+def mannwhitney_pairwise(
     df: pd.DataFrame, col_group: str,
     col_variable: str, p_value_threshold: float = 0.05
 ) -> pd.DataFrame:
