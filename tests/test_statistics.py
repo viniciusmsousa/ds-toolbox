@@ -20,6 +20,7 @@ def test_compute_pairwise_mannwhitney():
                                                 'group1_more_profitable']
     assert df_test_result['mw_pvalue'][0]==0
 
+
 def test_contigency_chi2_test():
     dict_df = {
         'group_interest': ['A'] * 800 + ['B'] * 200 + ['C'] * 300,
