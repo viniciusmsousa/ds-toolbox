@@ -2,6 +2,12 @@
 
 A set of functions and classes that helps the analytical work of a data scientist.  
 
+### Instalation
+
+```
+pip install git+https://github.com/viniciusmsousa/ds-toolbox.git#main
+```
+
 ### Current availiable modules
 
 - statistics:
