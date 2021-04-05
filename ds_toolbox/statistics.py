@@ -7,6 +7,8 @@ from scipy.stats import chi2_contingency
 import scikit_posthocs as sp
 
 
+from loguru import logger
+
 @typechecked
 def contigency_chi2_test(
     df: pd.DataFrame, col_interest: str, col_groups: str
@@ -30,7 +32,7 @@ def contigency_chi2_test(
             .reset_index()\
             .pivot_table(index=col_groups, columns=col_interest, values=0)\
             .fillna(value=0)
-
+        
         # 2) Computing Chi-Square Test
         stats_chi2_result = chi2_contingency(df_contigency)
 
@@ -146,17 +148,13 @@ def mannwhitney_pairwise(
             dict_test_moa['conclusion'].append(
                 str(np.where(
                     df_mannwhitney.loc[tup] <= p_value_threshold,
-                    'Evidência estatística de que há diferença.',
-                    'Evidência estatística de que NÃO há diferença.'
+                    'Statistical evidence that the groups are different.',
+                    'Statistical evidence that there is no difference between groups..'
                 ))
             )
 
         # 5) Computing the difference
-        out_df = pd.DataFrame.from_dict(dict_test_moa)\
-            .assign(group1_more_profitable=lambda df: np.where(
-                df['mean_variable_group1'] > df['mean_variable_group2'],
-                1, 0
-            ))
+        out_df = pd.DataFrame.from_dict(dict_test_moa)
 
         return out_df
     except Exception as e:

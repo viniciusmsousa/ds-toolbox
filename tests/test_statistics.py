@@ -16,8 +16,7 @@ def test_compute_pairwise_mannwhitney():
 
     assert type(df_test_result) == pd.DataFrame
     assert df_test_result.columns.tolist() == ['group1', 'group2','variable', 'mean_variable_group1',
-                                                'mean_variable_group2', 'mw_pvalue', 'conclusion',
-                                                'group1_more_profitable']
+                                                'mean_variable_group2', 'mw_pvalue', 'conclusion']
     assert df_test_result['mw_pvalue'][0]==0
 
 
