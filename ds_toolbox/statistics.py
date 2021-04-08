@@ -5,7 +5,8 @@ import pandas as pd
 import numpy as np
 from scipy.stats import chi2_contingency
 import scikit_posthocs as sp
-
+from loguru import logger
+logger.add("ds-toolbox.log", rotation="5 MB")
 
 from loguru import logger
 
@@ -83,7 +84,8 @@ def contigency_chi2_test(
 
         return (stats_chi2_result, df_results)
     except Exception as e:
-        raise Exception(f'Error in compute_contigency_chi2_test(): {e}')
+        logger.error(e)
+        raise Exception(e)
 
 
 
@@ -158,4 +160,5 @@ def mannwhitney_pairwise(
 
         return out_df
     except Exception as e:
-        raise Exception(f'Error in compute_pairwise_mannwhitney(): {e}')
+        logger.error(e)
+        raise Exception(e)
