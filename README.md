@@ -1,4 +1,4 @@
-## [WIP] DS-ToolBox
+## DS-ToolBox
 
 A set of functions and classes that helps the analytical work of a data scientist.  
 
