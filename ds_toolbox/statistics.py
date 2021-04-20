@@ -162,3 +162,50 @@ def mannwhitney_pairwise(
     except Exception as e:
         logger.error(e)
         raise Exception(e)
+
+
+def compute_ks_test(df: pd.DataFrame, col_target: str, col_probability: int):
+    """Function to compute a Ks Test and depicts a detailed result table.
+
+    Args:
+        df (pd.DataFrame): DataFrame with Probability and Classification value.
+        col_target (str): Column name with classification value.
+        col_probability (int): Column name with probability values.
+
+    Returns:
+        Dict: Dict with 'ks_table': table with the results and 'max_ks': Max KS Value. 
+    """
+    try:
+        df['target0'] = 1 - df[col_target]
+        df['prob_qcut'] = pd.qcut(df[col_probability], 10, duplicates='drop')
+        grouped = df.groupby('prob_qcut', as_index = False)
+        kstable = pd.DataFrame()
+        kstable['min_prob'] = grouped.min()[col_probability]
+        kstable['max_prob'] = grouped.max()[col_probability]
+        kstable['events']   = grouped.sum()[col_target]
+        kstable['nonevents'] = grouped.sum()['target0']
+        kstable = kstable.sort_values(by="min_prob", ascending=False).reset_index(drop = True)
+        kstable['event_rate'] = (kstable.events / df[col_target].sum()).apply('{0:.2%}'.format)
+        kstable['nonevent_rate'] = (kstable.nonevents / df['target0'].sum()).apply('{0:.2%}'.format)
+        kstable['cum_eventrate']=(kstable.events / df[col_target].sum()).cumsum()
+        kstable['cum_noneventrate']=(kstable.nonevents / df['target0'].sum()).cumsum()
+        kstable['KS'] = np.round(kstable['cum_eventrate']-kstable['cum_noneventrate'], 3) * 100
+
+        #Formating
+        kstable['cum_eventrate']= kstable['cum_eventrate'].apply('{0:.2%}'.format)
+        kstable['cum_noneventrate']= kstable['cum_noneventrate'].apply('{0:.2%}'.format)
+        kstable.index = range(1, (kstable.shape[0]+1))
+        kstable.index.rename('percentile', inplace=True)
+    
+        #Display KS
+        # from colorama import Fore
+        # print(Fore.RED + "KS is " + str(max(kstable['KS']))+"%"+ " at percentile " + str((kstable.index[kstable['KS']==max(kstable['KS'])][0])))
+
+        out_dict = {
+            'ks_table': kstable,
+            'max_ks': max(kstable['KS'])
+        }
+
+        return out_dict
+    except Exception as e:
+        raise Exception(e)
