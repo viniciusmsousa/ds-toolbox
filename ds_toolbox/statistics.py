@@ -207,4 +207,5 @@ def ks_test(df: pd.DataFrame, col_target: str, col_probability: str) -> Dict:
 
         return out_dict
     except Exception as e:
+        logger.error(e)
         raise Exception(e)
