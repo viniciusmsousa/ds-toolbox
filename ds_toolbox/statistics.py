@@ -138,12 +138,12 @@ def mannwhitney_pairwise(
             dict_test_moa['group1'].append(group1)
             dict_test_moa['group2'].append(group2)
             dict_test_moa['variable'].append(col_variable)
-            dict_test_moa['mean_variable_group1'].append(float(round(
-                df.loc[df[col_group] == group1][[col_variable]].mean(), 2
-            )))
-            dict_test_moa['mean_variable_group2'].append(float(round(
-                df.loc[df[col_group] == group2][[col_variable]].mean(), 2
-            )))
+            dict_test_moa['mean_variable_group1'].append(float(
+                df.loc[df[col_group] == group1][[col_variable]].mean()
+            ))
+            dict_test_moa['mean_variable_group2'].append(float(
+                df.loc[df[col_group] == group2][[col_variable]].mean()
+            ))
             dict_test_moa['mw_pvalue'].append(round(
                 df_mannwhitney.loc[tup], 6
             ))
