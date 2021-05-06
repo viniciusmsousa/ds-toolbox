@@ -5,10 +5,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import chi2_contingency
 import scikit_posthocs as sp
-from loguru import logger
-logger.add("ds-toolbox.log", rotation="5 MB")
 
-from loguru import logger
 
 @typechecked
 def contigency_chi2_test(
@@ -84,7 +81,6 @@ def contigency_chi2_test(
 
         return (stats_chi2_result, df_results)
     except Exception as e:
-        logger.error(e)
         raise Exception(e)
 
 
@@ -160,7 +156,6 @@ def mannwhitney_pairwise(
 
         return out_df
     except Exception as e:
-        logger.error(e)
         raise Exception(e)
 
 @typechecked
@@ -207,5 +202,4 @@ def ks_test(df: pd.DataFrame, col_target: str, col_probability: str) -> Dict:
 
         return out_dict
     except Exception as e:
-        logger.error(e)
         raise Exception(e)
