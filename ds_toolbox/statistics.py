@@ -173,6 +173,7 @@ def ks_test(df: pd.DataFrame, col_target: str, col_probability: str) -> Dict:
     """
     try:
         # Computing the KS
+        df = df.copy()
         df['target0'] = 1 - df[col_target]
         df['prob_qcut'] = pd.qcut(df[col_probability], 10, duplicates='drop')
         grouped = df.groupby('prob_qcut', as_index = False)
