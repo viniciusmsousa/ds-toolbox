@@ -2,8 +2,15 @@ import pytest
 import pandas as pd
 from numpy import random
 
+# # import pyspark
+from pyspark.sql import SparkSession
+# import pyspark.ml.feature as FF
+# from pyspark.sql import functions as F
+# from pyspark.sql.window import Window
+
 from ds_toolbox.statistics import mannwhitney_pairwise, contigency_chi2_test, ks_test
 
+# Mann Whitney
 def test_compute_pairwise_mannwhitney():
     s1 = random.normal(loc=1, scale=2, size=(1, 50))
     s2 = random.normal(loc=20, scale=7.6, size=(1, 50))
@@ -20,6 +27,7 @@ def test_compute_pairwise_mannwhitney():
     assert df_test_result['mw_pvalue'][0]==0
 
 
+# Contigency Chi2 Test
 def test_contigency_chi2_test():
     dict_df = {
         'group_interest': ['A'] * 800 + ['B'] * 200 + ['C'] * 300,
@@ -33,16 +41,33 @@ def test_contigency_chi2_test():
     assert type(df_results) == pd.DataFrame
     assert df_results.shape == (3, 16)
 
+# KS test
+s1 = random.normal(loc=0.2, scale=0.05, size=(1, 50))
+s2 = random.normal(loc=0.6, scale=0.05, size=(1, 50))
+dict_df = {
+    'group': [1] * 50 + [0] * 50,
+    'value': s1.tolist()[0] + s2.tolist()[0]
+}
+df_test = pd.DataFrame.from_dict(dict_df)
+
 def test_ks_test():
-    s1 = random.normal(loc=0.2, scale=0.05, size=(1, 50))
-    s2 = random.normal(loc=0.6, scale=0.05, size=(1, 50))
-    dict_df = {
-        'group': [1] * 50 + [0] * 50,
-        'value': s1.tolist()[0] + s2.tolist()[0]
-    }
-    df_test = pd.DataFrame.from_dict(dict_df)
     ks_out = ks_test(df=df_test, col_target='group', col_probability='value')
+    assert type(ks_out) == dict
+    assert type(ks_out['ks_table']) == pd.DataFrame
+    assert type(ks_out['max_ks']) == float
+
+def test_ks_test_spark_df():
+    spark = SparkSession.builder\
+            .master('local[1]') \
+            .config('spark.executor.memory', '1G') \
+            .config('spark.driver.memory', '1G') \
+            .config('spark.memory.offHeap.enabled', 'true') \
+            .config('spark.memory.offHeap.size', '1G') \
+            .getOrCreate()
+
+    dfs_test = spark.createDataFrame(df_test.copy())
     
+    ks_out = ks_test(df=dfs_test, spark=spark, col_target='group', col_probability='value')
     assert type(ks_out) == dict
     assert type(ks_out['ks_table']) == pd.DataFrame
     assert type(ks_out['max_ks']) == float
