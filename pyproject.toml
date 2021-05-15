@@ -12,6 +12,7 @@ scikit-posthocs = "^0.6.7"
 loguru = "^0.5.3"
 numpy = "1.19.5"
 scipy = "1.5.4"
+pyspark = ">=3.0.0"
 
 
 [tool.poetry.dev-dependencies]
