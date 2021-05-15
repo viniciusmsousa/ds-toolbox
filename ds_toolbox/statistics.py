@@ -1,10 +1,18 @@
+import sys
 from itertools import combinations
-from typing import List, Set, Dict, Tuple
+from typing import Union, Dict, Tuple
 from typeguard import typechecked
+
 import pandas as pd
 import numpy as np
 from scipy.stats import chi2_contingency
 import scikit_posthocs as sp
+
+import pyspark
+from pyspark.sql import SparkSession
+import pyspark.ml.feature as FF
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
 
 
 @typechecked
@@ -84,9 +92,6 @@ def contigency_chi2_test(
         raise Exception(e)
 
 
-
-
-
 @typechecked
 def mannwhitney_pairwise(
     df: pd.DataFrame, col_group: str,
@@ -158,8 +163,12 @@ def mannwhitney_pairwise(
     except Exception as e:
         raise Exception(e)
 
+
 @typechecked
-def ks_test(df: pd.DataFrame, col_target: str, col_probability: str) -> Dict:
+def ks_test(
+    df: Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame],
+    col_target: str, col_probability: str, spark: Union[pyspark.sql.session.SparkSession, None] = None
+) -> Dict:
     """Function to compute a Ks Test and depicts a detailed result table.
     https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 
@@ -172,34 +181,61 @@ def ks_test(df: pd.DataFrame, col_target: str, col_probability: str) -> Dict:
         Dict: Dict with 'ks_table': table with the results and 'max_ks': Max KS Value. 
     """
     try:
-        # Computing the KS
-        df = df.copy()
-        df['target0'] = 1 - df[col_target]
-        df['prob_qcut'] = pd.qcut(df[col_probability], 10, duplicates='drop')
-        grouped = df.groupby('prob_qcut', as_index = False)
-        ks_table = pd.DataFrame()
-        ks_table['min_prob'] = grouped.min()[col_probability]
-        ks_table['max_prob'] = grouped.max()[col_probability]
-        ks_table['events']   = grouped.sum()[col_target]
-        ks_table['nonevents'] = grouped.sum()['target0']
-        ks_table = ks_table.sort_values(by="min_prob", ascending=False).reset_index(drop = True)
-        ks_table['event_rate'] = (ks_table.events / df[col_target].sum()).apply('{0:.2%}'.format)
-        ks_table['nonevent_rate'] = (ks_table.nonevents / df['target0'].sum()).apply('{0:.2%}'.format)
-        ks_table['cum_eventrate']=(ks_table.events / df[col_target].sum()).cumsum()
-        ks_table['cum_noneventrate']=(ks_table.nonevents / df['target0'].sum()).cumsum()
-        ks_table['KS'] = np.round(ks_table['cum_eventrate']-ks_table['cum_noneventrate'], 3) * 100
+        if type(df) == pd.DataFrame:
+            spark = SparkSession.builder\
+                        .appName('ks_test') \
+                        .master('local[1]') \
+                        .config('spark.executor.memory', '3G') \
+                        .config('spark.driver.memory', '3G') \
+                        .config('spark.memory.offHeap.enabled', 'true') \
+                        .config('spark.memory.offHeap.size', '3G') \
+                        .getOrCreate()
 
-        # Formating the Detailed Table
-        ks_table['cum_eventrate']= ks_table['cum_eventrate'].apply('{0:.2%}'.format)
-        ks_table['cum_noneventrate']= ks_table['cum_noneventrate'].apply('{0:.2%}'.format)
-        ks_table.index = range(1, (ks_table.shape[0]+1))
-        ks_table.index.rename('percentile', inplace=True)
+            dfs = spark.createDataFrame(df.copy())
+        else:
+            dfs = df
+        
+        dfs = dfs.withColumn('target0',1 - dfs[col_target])
+        qds = FF.QuantileDiscretizer(numBuckets=10,inputCol=col_probability, outputCol="prob_qcut", relativeError=0, handleInvalid="error")
+        dfs = qds.setHandleInvalid("skip").fit(dfs).transform(dfs)
 
-        # Output Dictionary
+        ks_table = dfs\
+                .groupBy('prob_qcut')\
+                .agg(
+                    F.min(col_probability),
+                    F.max(col_probability),
+                    F.sum(col_target),
+                    F.sum('target0')
+                )\
+                .orderBy(F.col(f'min({col_probability})').desc())\
+                .withColumnRenamed(f'min({col_probability})', 'min_prob')\
+                .withColumnRenamed(f'max({col_probability})', 'max_prob')\
+                .withColumnRenamed(f'sum({col_target})', 'events')\
+                .withColumnRenamed('sum(target0)','non_events')
+        ks_table = ks_table.withColumn('event_rate', ks_table.events/dfs.filter(f'{col_target} == 1').count())
+        ks_table = ks_table.withColumn('nonevent_rate', ks_table.non_events/dfs.filter(f'{col_target} == 0').count())
+
+        win = Window.partitionBy().orderBy().rowsBetween(-sys.maxsize, 0)
+        ks_table = ks_table.withColumn('cum_eventrate', F.sum(ks_table.event_rate).over(win))
+        ks_table = ks_table.withColumn('cum_noneventrate', F.sum(ks_table.nonevent_rate).over(win))
+
+        ks_table = ks_table.withColumn('ks', F.expr('cum_eventrate - cum_noneventrate'))
+
+        ks_table = ks_table.withColumn('percentile', F.row_number().over(Window.orderBy(F.lit(1))))
+
+        ks_table = ks_table.select(
+            'percentile', 'min_prob', 'max_prob', 'events', 'non_events',
+            'event_rate', 'nonevent_rate', 'cum_eventrate', 'cum_noneventrate',
+            'ks'
+        )
+
         out_dict = {
-            'ks_table': ks_table,
-            'max_ks': max(ks_table['KS'])
+            'ks_table': ks_table.toPandas(),
+            'max_ks': ks_table.agg({"ks": "max"}).collect()[0][0]
         }
+
+        if type(df) == pd.DataFrame:
+            spark.stop()
 
         return out_dict
     except Exception as e:
