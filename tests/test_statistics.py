@@ -1,12 +1,6 @@
-import pytest
 import pandas as pd
 from numpy import random
-
-# # import pyspark
 from pyspark.sql import SparkSession
-# import pyspark.ml.feature as FF
-# from pyspark.sql import functions as F
-# from pyspark.sql.window import Window
 
 from ds_toolbox.statistics import mannwhitney_pairwise, contigency_chi2_test, ks_test
 
