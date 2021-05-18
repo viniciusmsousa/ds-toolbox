@@ -16,4 +16,4 @@ pip install git+https://github.com/viniciusmsousa/ds-toolbox.git#main
     - `ks_test`: Compute the [KS-Test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test), for Pandas and Spark DF.
 - ml:
     - evaluator:
-        - `binary_classifier_metrics`: Computes classification metrics (confusion_matrix, accuracy, f1, precision, recall, aucroc, aucpr) based on a dataframe (SparkDF and PandasDF) with ground truth and prediction.
+        - `binary_classifier_metrics`: Computes classification metrics (confusion_matrix, accuracy, f1, precision, recall, aucroc, aucpr) based on a dataframe (SparkDF or PandasDF) with ground truth and prediction.
