@@ -14,6 +14,8 @@ import pyspark.ml.feature as FF
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
+from ds_toolbox.spark_utils import start_local_spark
+
 
 @typechecked
 def contigency_chi2_test(
@@ -167,32 +169,35 @@ def mannwhitney_pairwise(
 @typechecked
 def ks_test(
     df: Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame],
-    col_target: str, col_probability: str, spark: Union[pyspark.sql.session.SparkSession, None] = None
+    col_target: str, col_probability: str, spark: Union[pyspark.sql.session.SparkSession, None] = None,
+    max_mem: int = 2, n_cores: int =4
 ) -> Dict:
     """Function to compute a Ks Test and depicts a detailed result table.
     https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test
 
     Args:
-        df (pd.DataFrame): DataFrame with Probability and Classification value.
+        df (Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame]): DataFrame with Probability and Classification value.
         col_target (str): Column name with classification value.
         col_probability (int): Column name with probability values.
+        max_mem (int, optional): Max memory to be allocated to local spark if df is pandasDF. 
+        n_cores (int, optional): Number of cores to be allocated to local spark if df is pandas.
+
+    Raises:
+        ValueError: If df is sparkDF an spark is None.
 
     Returns:
         Dict: Dict with 'ks_table': table with the results and 'max_ks': Max KS Value. 
     """
     try:
-        if type(df) == pd.DataFrame:
-            spark = SparkSession.builder\
-                        .appName('ks_test') \
-                        .master('local[1]') \
-                        .config('spark.executor.memory', '3G') \
-                        .config('spark.driver.memory', '3G') \
-                        .config('spark.memory.offHeap.enabled', 'true') \
-                        .config('spark.memory.offHeap.size', '3G') \
-                        .getOrCreate()
+        if spark is None and type(df) == pyspark.sql.dataframe.DataFrame:
+            raise ValueError('type(spark) is None. Please pass a valid spark session to spark argument.')
 
-            dfs = spark.createDataFrame(df.copy())
+        if type(df) == pd.DataFrame:
+            input_pandas = True
+            spark = start_local_spark(max_mem=max_mem, n_cores=n_cores)
+            dfs = spark.createDataFrame(df)
         else:
+            input_pandas = False
             dfs = df
         
         dfs = dfs.withColumn('target0',1 - dfs[col_target])
@@ -234,7 +239,7 @@ def ks_test(
             'max_ks': ks_table.agg({"ks": "max"}).collect()[0][0]
         }
 
-        if type(df) == pd.DataFrame:
+        if type(input_pandas):
             spark.stop()
 
         return out_dict
