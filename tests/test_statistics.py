@@ -1,6 +1,4 @@
 import pandas as pd
-from numpy import random
-from pyspark.sql import SparkSession
 
 from ds_toolbox.statistics import mannwhitney_pairwise, contigency_chi2_test, ks_test
 
