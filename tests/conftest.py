@@ -1,10 +1,40 @@
+from numpy import random
 import pandas as pd
 from pytest import fixture
 from ds_toolbox.spark_utils import start_local_spark
 
+
 @fixture
 def spark():
     return start_local_spark(max_mem=1, n_cores=4)
+
+@fixture
+def df_mannwhitney():
+    s1 = random.normal(loc=1, scale=2, size=(1, 50))
+    s2 = random.normal(loc=20, scale=7.6, size=(1, 50))
+    dict_df = {
+        'group': ['A'] * 50 + ['B'] * 50,
+        'value': s1.tolist()[0] + s2.tolist()[0]
+    }
+    return pd.DataFrame.from_dict(dict_df)
+
+@fixture
+def df_chi2():
+    dict_df = {
+        'group_interest': ['A'] * 800 + ['B'] * 200 + ['C'] * 300,
+        'group_compare': ['group1'] * 200 + ['group2'] * 800 + ['group3']*300
+    }
+    return pd.DataFrame.from_dict(dict_df)
+
+@fixture
+def df_ks():
+    s1 = random.normal(loc=0.2, scale=0.05, size=(1, 50))
+    s2 = random.normal(loc=0.6, scale=0.05, size=(1, 50))
+    dict_df = {
+        'group': [1] * 50 + [0] * 50,
+        'value': s1.tolist()[0] + s2.tolist()[0]
+    }
+    return pd.DataFrame.from_dict(dict_df)
 
 @fixture
 def df_binary_classification_prediction():
