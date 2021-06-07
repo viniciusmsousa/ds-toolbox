@@ -140,3 +140,4 @@ cython_debug/
 ## Custom Files
 wip.ipynb
 .vscode/
+.DS_Store
