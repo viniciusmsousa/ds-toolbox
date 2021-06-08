@@ -23,6 +23,7 @@ def contigency_chi2_test(
 ) -> Tuple:
     """Compute the Chi-Squared Contigency Table test, returning a formated
     DataFrame.
+
     Args:
         df (pd.DataFrame): DataFrame that contains the columns to create a
         contigency table.
@@ -33,6 +34,7 @@ def contigency_chi2_test(
         tuple: First element is the scipy object with the test result.
         Second element is an analytical DataFrame.
     """
+
     try:
         # 1) Computing contigency table
         df_contigency = df\
@@ -100,14 +102,15 @@ def mannwhitney_pairwise(
     col_variable: str, p_value_threshold: float = 0.05
 ) -> pd.DataFrame:
     """Function to Compute a pairwise Mann Whitney Test.
+
     Args:
-        df (pd.DataFrame): DataFrame with value column and group column
-            to compute the test.
+        df (pd.DataFrame): DataFrame with value column and group column to compute the test.
         col_group (str): Column name of the groups to be compared.
         col_variable (str): Columns name of the numeric variable
             to be compared.
         p_value_threshold (float, optional): Threshold to compare
             the p-value with. Defaults to 0.05.
+
     Returns:
         pd.DataFrame: DataFrame with the columns: group1, group2, variable,
             mean_variable_group1, mean_variable_group2, mw_pvalue,
