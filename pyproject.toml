@@ -28,6 +28,8 @@ Cython = "^0.29.23"
 pybind11 = "^2.6.2"
 Sphinx = "^4.0.2"
 sphinx-rtd-theme = "^0.5.2"
+codecov = "^2.1.11"
+pytest-cov = "^2.12.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

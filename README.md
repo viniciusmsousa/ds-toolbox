@@ -1,5 +1,9 @@
 ## DS-ToolBox
 
+<!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/viniciusmsousa/ds-toolbox/branch/main/graph/badge.svg)](https://codecov.io/gh/viniciusmsousa/ds-toolbox?branch=main)
+<!-- badges: end -->
+
 A set of functions and classes that helps the analytical work of a data scientist.  
 
 ### Instalation
