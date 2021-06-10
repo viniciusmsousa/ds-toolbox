@@ -19,13 +19,11 @@ jobs:
         config:
           - {os: macOS-latest, python: 3.9}
           - {os: macOS-latest, python: 3.8}
-          - {os: macOS-latest, python: 3.7}
           - {os: windows-latest, python: 3.9}
           - {os: windows-latest, python: 3.8}
-          - {os: windows-latest, python: 3.7}
           - {os: ubuntu-latest, python: 3.9}
           - {os: ubuntu-latest, python: 3.8}
-          - {os: ubuntu-latest, python: 3.7}
+
 
     steps:
     - uses: actions/checkout@v2
@@ -41,3 +39,10 @@ jobs:
     - name: Test with pytest
       run: |
         python3 -m pytest
+
+    - name: Upload check results
+          if: failure()
+          uses: actions/upload-artifact@main
+          with:
+            name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
+            path: check
