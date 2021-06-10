@@ -39,10 +39,3 @@ jobs:
     - name: Test with pytest
       run: |
         python3 -m pytest
-
-    - name: Upload check results
-          if: failure()
-          uses: actions/upload-artifact@main
-          with:
-            name: ${{ matrix.config.os }}-r${{ matrix.config.r }}-results
-            path: check
