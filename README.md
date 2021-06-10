@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![PyPI Latest Release](https://img.shields.io/pypi/v/ds-toolbox.svg)](https://pypi.org/project/ds-toolbox/)
+[![Package Tests](https://github.com/viniciusmsousa/ds-toolbox/actions/workflows/python-package.yml/badge.svg)](https://github.com/viniciusmsousa/ds-toolbox/actions)
 [![Codecov test coverage](https://codecov.io/gh/viniciusmsousa/ds-toolbox/branch/main/graph/badge.svg)](https://codecov.io/gh/viniciusmsousa/ds-toolbox?branch=main)
 <!-- badges: end -->
 
