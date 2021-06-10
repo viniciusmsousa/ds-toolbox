@@ -17,11 +17,11 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest}
-          - {os: windows-latest}
-          - {os: windows-latest}
-          - {os: ubuntu-18.04}
-          - {os: ubuntu-latest}
+          - {os: macOS-latest, , python: 3.8}
+          # - {os: windows-latest, python: 3.8}
+          # - {os: windows-latest, python: 3.8}
+          # - {os: ubuntu-18.04, python: 3.8}
+          # - {os: ubuntu-latest, python: 3.8}
 
     steps:
     - uses: actions/checkout@v2
