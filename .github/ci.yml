@@ -1,0 +1,25 @@
+name: Unit Testing
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: master
+
+jobs:
+  build:
+    runs-on: [ubuntu-latest, windows-latest, windows-2016, macos-latest]
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python version
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: [x64, arm64]
+     - name: Installing dependencies
+       run: pip install -r requirements.txt 
+     - name: Runing Test
+       run: pytest
