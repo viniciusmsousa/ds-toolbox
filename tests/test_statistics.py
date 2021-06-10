@@ -14,7 +14,11 @@ def test_compute_pairwise_mannwhitney(df_mannwhitney):
 
 # Chi2
 def test_contigency_chi2_test(df_chi2):
-    stats_chi2_result, df_results = contigency_chi2_test(df=df_chi2, col_interest='group_interest', col_groups='group_compare')
+    stats_chi2_result, df_results = contigency_chi2_test(
+        df=df_chi2,
+        col_interest='group_interest',
+        col_groups='group_compare'
+    )
 
     assert type(stats_chi2_result) == tuple
     assert len(stats_chi2_result) == 4
