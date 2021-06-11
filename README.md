@@ -6,7 +6,7 @@
 [![Codecov test coverage](https://codecov.io/gh/viniciusmsousa/ds-toolbox/branch/main/graph/badge.svg)](https://codecov.io/gh/viniciusmsousa/ds-toolbox?branch=main)
 <!-- badges: end -->
 
-A set of functions and classes that helps the analytical work of a data scientist. Full documentation can be found [here](https://viniciusmsousa.github.io/ds-toolbox/). 
+A set of functions to help the analytical work of a data scientist. Full documentation can be found in [Package Homepage](https://viniciusmsousa.github.io/ds-toolbox/). 
 
 ### Instalation
 
