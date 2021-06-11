@@ -5,7 +5,11 @@ from ds_toolbox.ml.evaluator import binary_classifier_metrics
 
 # Binary Classifier Metrics
 def test_binary_classifier_metrics_pandas(df_binary_classification_prediction):
-    out = binary_classifier_metrics(df_prediction=df_binary_classification_prediction, col_target='target', col_prediction='predicted')
+    out = binary_classifier_metrics(
+        df_prediction=df_binary_classification_prediction,
+        col_target='target',
+        col_prediction='predicted'
+    )
 
     for metric in ['confusion_matrix', 'accuracy', 'f1', 'precision', 'recall', 'aucroc', 'aucpr']:
         assert metric in out.keys()
