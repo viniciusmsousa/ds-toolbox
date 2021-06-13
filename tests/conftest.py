@@ -46,3 +46,18 @@ def df_binary_classification_prediction():
 @fixture
 def dfs_binary_classification_prediction(spark, df_binary_classification_prediction):
     return spark.createDataFrame(df_binary_classification_prediction)
+
+@fixture
+def df_ab_test_pairwise():
+    s1 = random.normal(loc=1, scale=2, size=(1, 50))
+    s2 = random.normal(loc=20, scale=7.6, size=(1, 50))
+    s3 = random.normal(loc=-30, scale=3.1, size=(1, 50))
+    dict_df = {
+        'group': ['A'] * 50 + ['B'] * 50 + ['C'] * 50,
+        'value': s1.tolist()[0] + s2.tolist()[0] + s3.tolist()[0]
+    }
+    return pd.DataFrame.from_dict(dict_df)
+
+@fixture
+def dfs_ab_test_pairwise(spark, df_ab_test_pairwise):
+    return spark.createDataFrame(df_ab_test_pairwise)
