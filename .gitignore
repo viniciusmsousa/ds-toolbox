@@ -142,3 +142,4 @@ wip.ipynb
 .vscode/
 .DS_Store
 sphinx/
+data/
