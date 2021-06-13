@@ -177,6 +177,11 @@
 <div class="section" id="module-tests.conftest">
 <span id="tests-conftest-module"></span><h2>tests.conftest module<a class="headerlink" href="#module-tests.conftest" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.df_ab_test_pairwise">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_ab_test_pairwise</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_ab_test_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.conftest.df_binary_classification_prediction">
 <span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_binary_classification_prediction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_binary_classification_prediction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -194,6 +199,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.conftest.df_mannwhitney">
 <span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_mannwhitney</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_mannwhitney" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.dfs_ab_test_pairwise">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">dfs_ab_test_pairwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_ab_test_pairwise</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.dfs_ab_test_pairwise" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -222,6 +232,21 @@
 </div>
 <div class="section" id="module-tests.test_statistics">
 <span id="tests-test-statistics-module"></span><h2>tests.test_statistics module<a class="headerlink" href="#module-tests.test_statistics" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_statistics.test_ab_test">
+<span class="sig-prename descclassname"><span class="pre">tests.test_statistics.</span></span><span class="sig-name descname"><span class="pre">test_ab_test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_statistics.test_ab_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_statistics.test_ab_test_pairwise_pandas">
+<span class="sig-prename descclassname"><span class="pre">tests.test_statistics.</span></span><span class="sig-name descname"><span class="pre">test_ab_test_pairwise_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_ab_test_pairwise</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_statistics.test_ab_test_pairwise_pandas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_statistics.test_ab_test_pairwise_spark">
+<span class="sig-prename descclassname"><span class="pre">tests.test_statistics.</span></span><span class="sig-name descname"><span class="pre">test_ab_test_pairwise_spark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dfs_ab_test_pairwise</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_statistics.test_ab_test_pairwise_spark" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.test_statistics.test_compute_pairwise_mannwhitney">
 <span class="sig-prename descclassname"><span class="pre">tests.test_statistics.</span></span><span class="sig-name descname"><span class="pre">test_compute_pairwise_mannwhitney</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_mannwhitney</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_statistics.test_compute_pairwise_mannwhitney" title="Permalink to this definition">¶</a></dt>

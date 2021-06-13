@@ -213,6 +213,70 @@ n_cores (int, optional): Number os cores to be allocated. Defaults to 2.</p>
 <div class="section" id="module-ds_toolbox.statistics">
 <span id="ds-toolbox-statistics-module"></span><h2>ds_toolbox.statistics module<a class="headerlink" href="#module-ds_toolbox.statistics" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.statistics.ab_test">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.statistics.</span></span><span class="sig-name descname"><span class="pre">ab_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g1</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#ds_toolbox.statistics.ab_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal Function. Please refer to ab_test_pairwise.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>g1 (str): Group 1 Identifier.
+g2 (str): Group 2 Identifier.
+g1_mean (float): Group 1 Mean of Variable of interest.
+g1_std (float): Group 1 Standard Deviation os Variable of interest.
+g1_var (float): Group 1 Variance of variable of interest
+g1_count (int): Group 1 number of observations.
+g2_mean (float): Same as Group 1 but for Group 2.
+g2_std (float): Same as Group 1 but for Group 2.
+g2_var (float): Same as Group 1 but for Group 2.
+g2_count (int): Same as Group 1 but for Group 2.
+confidence (float, optional): Desired Confidence Level. Defaults to 0.95.
+h0 (int, optional): Null hypothesis difference between Group 1 and Group 2 in variable of interest. Defaults to 0.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: Any error will be raised as an exception.</p>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>pd.DataFrame: DataFrame with the columns</dt><dd><ul class="simple">
+<li><p>Group1</p></li>
+<li><p>Group2</p></li>
+<li><p>Group1_{confidence*100}_Percent_CI</p></li>
+<li><p>Group2_{confidence*100}_Percent_CI</p></li>
+<li><p>Group1_Minus_Group2_{confidence*100}_Percent_CI</p></li>
+<li><p>Z_statistic</p></li>
+<li><p>P_Value</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.statistics.ab_test_pairwise">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.statistics.</span></span><span class="sig-name descname"><span class="pre">ab_test_pairwise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">pyspark.sql.dataframe.DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_group</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_variable</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#ds_toolbox.statistics.ab_test_pairwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that computes a simple AB test (based on mean, std and var) for each pair of a categorical column. Works with Both PandasDF and SparkDF.</p>
+<dl>
+<dt>Args:</dt><dd><p>df (Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame]): Data Frame with a group column and a numeric variable column.
+col_group (str): Column name with group column. Distinct values of this column will the used as comparison in pairwise.
+col_variable (str): Variable column. Numeric column with the output to be compared between the group column.
+confidence (float, optional): Desired Confidence Level. Defaults to 0.95.
+h0 (float, optional): Null hypothesis value. Defaults to 0.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: Erros.</p>
+<dl class="simple">
+<dt>pd.DataFrame: DataFrame one row per possible pair between values from col_group and the following columns</dt><dd><ul class="simple">
+<li><p>Group1</p></li>
+<li><p>Group2</p></li>
+<li><p>Group1_{confidence*100}_Percent_CI</p></li>
+<li><p>Group2_{confidence*100}_Percent_CI</p></li>
+<li><p>Group1_Minus_Group2_{confidence*100}_Percent_CI</p></li>
+<li><p>Z_statistic</p></li>
+<li><p>P_Value</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="ds_toolbox.statistics.contigency_chi2_test">
 <span class="sig-prename descclassname"><span class="pre">ds_toolbox.statistics.</span></span><span class="sig-name descname"><span class="pre">contigency_chi2_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_interest</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_groups</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><a class="headerlink" href="#ds_toolbox.statistics.contigency_chi2_test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Chi-Squared Contigency Table test, returning a formated

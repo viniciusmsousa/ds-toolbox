@@ -5,6 +5,7 @@ from typeguard import typechecked
 
 import pandas as pd
 import numpy as np
+from scipy import stats
 from scipy.stats import chi2_contingency
 import scikit_posthocs as sp
 
@@ -246,5 +247,133 @@ def ks_test(
             spark.stop()
 
         return out_dict
+    except Exception as e:
+        raise Exception(e)
+
+@typechecked
+def ab_test(
+    g1: str, g2: str, 
+    g1_mean: float, g1_std: float, g1_var: float, g1_count: int,
+    g2_mean: float, g2_std: float, g2_var: float, g2_count: int,
+    confidence=0.95, h0=0
+) -> pd.DataFrame:
+    """Internal Function. Please refer to ab_test_pairwise.
+
+    Args:
+        g1 (str): Group 1 Identifier.
+        g2 (str): Group 2 Identifier.
+        g1_mean (float): Group 1 Mean of Variable of interest.
+        g1_std (float): Group 1 Standard Deviation os Variable of interest.
+        g1_var (float): Group 1 Variance of variable of interest
+        g1_count (int): Group 1 number of observations.
+        g2_mean (float): Same as Group 1 but for Group 2.
+        g2_std (float): Same as Group 1 but for Group 2.
+        g2_var (float): Same as Group 1 but for Group 2.
+        g2_count (int): Same as Group 1 but for Group 2.
+        confidence (float, optional): Desired Confidence Level. Defaults to 0.95.
+        h0 (int, optional): Null hypothesis difference between Group 1 and Group 2 in variable of interest. Defaults to 0.
+
+    Raises:
+        Exception: Any error will be raised as an exception.
+
+    Returns:
+        pd.DataFrame: DataFrame with the columns
+            - Group1
+            - Group2
+            - Group1_{confidence*100}_Percent_CI
+            - Group2_{confidence*100}_Percent_CI
+            - Group1_Minus_Group2_{confidence*100}_Percent_CI
+            - Z_statistic
+            - P_Value
+    """
+    try:
+        se1, se2 = g1_std / np.sqrt(g1_count), g2_std / np.sqrt(g2_count)
+        
+        diff = g1_mean - g2_mean
+        se_diff = np.sqrt(g1_var/g1_count + g2_var/g2_count)
+        
+        z_stats = (diff-h0)/se_diff
+        p_value = stats.norm.cdf(z_stats)
+        
+        def critial(se): return -se*stats.norm.ppf((1 - confidence)/2)
+        
+        ci_percent = int(confidence*100)
+        out_dict = {
+            'Group1': [g1],
+            'Group2': [g2],
+            f'Group1_{ci_percent}_Percent_CI': [f'{g1_mean} +- {critial(se1)}'],
+            f'Group2_{ci_percent}_Percent_CI': [f'{g2_mean} +- {critial(se2)}'],
+            f'Group1_Minus_Group2_{ci_percent}_Percent_CI': [f'{diff} +- {critial(se_diff)}'],
+            'Z_statistic': [z_stats],
+            'P_Value': [p_value],
+            'Conclusion': [str(np.where(
+                p_value <= (1-confidence),
+                'Statistical evidence that the groups are different.',
+                'Statistical evidence that there is no difference between groups.'
+            ))]
+        }
+
+        return pd.DataFrame(out_dict)
+    except Exception as e:
+        raise Exception(e)
+
+@typechecked
+def ab_test_pairwise(
+    df: Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame], col_group: str, col_variable: str, confidence: float = 0.95, h0: float = 0
+) -> pd.DataFrame:
+    """Function that computes a simple AB test (based on mean, std and var) for each pair of a categorical column. Works with Both PandasDF and SparkDF.
+
+    Args:
+        df (Union[pd.DataFrame, pyspark.sql.dataframe.DataFrame]): Data Frame with a group column and a numeric variable column.
+        col_group (str): Column name with group column. Distinct values of this column will the used as comparison in pairwise.
+        col_variable (str): Variable column. Numeric column with the output to be compared between the group column.
+        confidence (float, optional): Desired Confidence Level. Defaults to 0.95.
+        h0 (float, optional): Null hypothesis value. Defaults to 0.
+
+    Raises:
+        Exception: Erros.
+
+        pd.DataFrame: DataFrame one row per possible pair between values from col_group and the following columns
+            - Group1
+            - Group2
+            - Group1_{confidence*100}_Percent_CI
+            - Group2_{confidence*100}_Percent_CI
+            - Group1_Minus_Group2_{confidence*100}_Percent_CI
+            - Z_statistic
+            - P_Value
+    """
+    try:
+        # 1) Getting possible group combinations and Summary statistics on each group
+        if type(df) == pd.DataFrame:
+            uniques = [i for i in combinations(list(df[col_group].unique()), 2)]
+            df_group_summary = df.groupby([col_group]).agg({col_variable:['mean', 'std', 'var', 'count']}).reset_index().droplevel(0, axis=1)
+        else:
+            group_units = list(df.select(col_group).drop_duplicates().toPandas()[col_group])
+            uniques = [i for i in combinations(group_units, 2)]
+            df_group_summary = df.groupBy([col_group]).agg(F.mean(col_variable), F.stddev_pop(col_variable), F.var_pop(col_variable), F.count(col_variable)).toPandas()
+            
+        df_group_summary.columns = [col_group, f'{col_variable}_mean', f'{col_variable}_std', f'{col_variable}_var', f'{col_variable}_count']
+        
+        # 2) Results DataFrame to be filled
+        tests_result = pd.DataFrame()
+ 
+        # 4) Populating the Dict
+        for tup in uniques:
+            test_result = ab_test(
+                g1=tup[0], g2 = tup[1],
+                confidence=confidence, h0=h0,
+                g1_mean = df_group_summary.loc[df_group_summary[col_group] ==  tup[0]][f'{col_variable}_mean'].tolist()[0],
+                g1_std = df_group_summary.loc[df_group_summary[col_group] ==  tup[0]][f'{col_variable}_std'].tolist()[0],
+                g1_var = df_group_summary.loc[df_group_summary[col_group] ==  tup[0]][f'{col_variable}_var'].tolist()[0],
+                g1_count = df_group_summary.loc[df_group_summary[col_group] ==  tup[0]][f'{col_variable}_count'].tolist()[0],
+                g2_mean = df_group_summary.loc[df_group_summary[col_group] ==  tup[1]][f'{col_variable}_mean'].tolist()[0],
+                g2_std = df_group_summary.loc[df_group_summary[col_group] ==  tup[1]][f'{col_variable}_std'].tolist()[0],
+                g2_var = df_group_summary.loc[df_group_summary[col_group] ==  tup[1]][f'{col_variable}_var'].tolist()[0],
+                g2_count = df_group_summary.loc[df_group_summary[col_group] ==  tup[1]][f'{col_variable}_count'].tolist()[0]
+            )
+
+            tests_result = tests_result.append(test_result)
+
+        return tests_result
     except Exception as e:
         raise Exception(e)
