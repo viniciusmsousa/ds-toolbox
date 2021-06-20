@@ -5,6 +5,7 @@
 [![Package Tests](https://github.com/viniciusmsousa/ds-toolbox/actions/workflows/python-package.yml/badge.svg)](https://github.com/viniciusmsousa/ds-toolbox/actions)
 [![Codecov test coverage](https://codecov.io/gh/viniciusmsousa/ds-toolbox/branch/main/graph/badge.svg)](https://codecov.io/gh/viniciusmsousa/ds-toolbox?branch=main)
 [![Github Stars](https://img.shields.io/github/stars/viniciusmsousa/ds-toolbox.svg?style=social&label=Github)](https://github.com/viniciusmsousa/ds-toolbox)
+[![downloads](https://img.shields.io/pypi/dm/ds-toolbox.svg)](https://pypistats.org/packages/ds-toolbox)
 <!-- badges: end -->
 
 A set of functions to help the analytical work of a data scientist. Full documentation can be found in [Package Homepage](https://viniciusmsousa.github.io/ds-toolbox/). 
