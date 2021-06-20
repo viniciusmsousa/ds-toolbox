@@ -8,7 +8,7 @@
 [![downloads](https://img.shields.io/pypi/dm/ds-toolbox.svg)](https://pypistats.org/packages/ds-toolbox)
 <!-- badges: end -->
 
-A set of functions to help the analytical work of a data scientist. Full documentation can be found in [Package Homepage](https://viniciusmsousa.github.io/ds-toolbox/). 
+A set of functions to help the analytical work of a data scientist. Full documentation can be found in [Package Homepage](https://viniciusmsousa.github.io/ds-toolbox/). The main motivation of the package is to facilitate the taks by using a common input and output structure, SparkDF and PandasDF.
 
 ### Instalation
 
