@@ -1,8 +1,23 @@
 from typing import Union, List
 from typeguard import typechecked
 
+
 @typechecked
 def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, categorical_regressors: Union[None, List] = None, treatment_col: Union[None, str] = None):
+    """Creates a formula to be passed to a import statsmodels.formula.api.
+
+    Args:
+        y (str): Name of the y variable.
+        numeric_regressors (Union[None, List], optional): List with name of the numeric regressors. Defaults to None.
+        categorical_regressors (Union[None, List], optional): List os strings with the names of categorical regressors. Defaults to None.
+        treatment_col (Union[None, str], optional): Name with the name of the treatment variable. Defaults to None.
+
+    Raises:
+        ValueError: At least one of numeric_regressors or categorical_regressors must be not None. If both are None ValueError will be raised
+
+    Returns:
+        str: str with the formula to be passed to a statsmodels.formula.api function.
+    """
     if (numeric_regressors is None) & (categorical_regressors is None):
         raise ValueError('At least of one "numeric_regressors" or "categorical_regressors" must str list.')
 
