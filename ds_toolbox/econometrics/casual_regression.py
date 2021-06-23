@@ -40,7 +40,7 @@ def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, cate
     return fit_formula
 
 @typechecked
-def linear_coefficient(df: pd.DataFrame, y: str, x: str):
+def linear_coefficient(df: pd.DataFrame, y: str, x: str) -> np.float64:
     """Computes the linear regression coefficient (OLS).
 
     Args:
@@ -52,4 +52,32 @@ def linear_coefficient(df: pd.DataFrame, y: str, x: str):
         np.float64: The linear coefficient.
     """
     return (np.sum((df[x] - df[x].mean())*(df[y] - df[y].mean())) / np.sum((df[x] - df[x].mean())**2))
+
+@typechecked
+def elasticity_ci(df: pd.DataFrame, y: str, t: str, z: float = 1.96) -> dict:
+    """Computes the confidence interval of a linear coefficient of a regression.
+    Used to compute the elasticity confidence interval.
+
+    Args:
+        df (pd.DataFrame): Data Frame with y and t columns.
+        y (str): Column name of the y variable.
+        t (str): Column name of the treatment variable.
+        z (float, optional): z value for the normal distribution. Defaults to 1.96.
+
+    Returns:
+        dict: dict in the form {'elasticity': float, 'lower_ci': float, 'upper_ci': float}.
+    """
+    n = df.shape[0]
+    t_bar = df[t].mean()
+    beta1 = linear_coefficient(df=df, y=y, x=t)
+    beta0 = df[y].mean() - beta1 * t_bar
+    e = df[y] - (beta0 + beta1*df[t])
+    se = np.sqrt(((1/(n-2))*np.sum(e**2))/np.sum((df[t]-t_bar)**2))
+
+    out_dict = {
+        'elasticity': beta1,
+        'lower_ci': beta1 - z*se,
+        'upper_ci': beta1 + z*se
+    }
+    return out_dict
 
