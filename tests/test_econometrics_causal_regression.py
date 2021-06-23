@@ -1,4 +1,4 @@
-from ds_toolbox.econometrics.casual_regression import create_sm_formula, linear_coefficient, elasticity_ci, compute_cum_elasticity
+from ds_toolbox.econometrics.causal_regression import create_sm_formula, linear_coefficient, elasticity_ci, compute_cum_elasticity
 
 def test_create_sm_formula():
 
