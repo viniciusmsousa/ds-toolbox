@@ -81,3 +81,49 @@ def elasticity_ci(df: pd.DataFrame, y: str, t: str, z: float = 1.96) -> dict:
     }
     return out_dict
 
+@typechecked
+def compute_cum_elasticity(df: pd.DataFrame, predicted_elasticity: str, y: str, t: str, min_units: int = 30, steps: int = 100, z: float = 1.96) -> pd.DataFrame:
+    """Computes the cumulative elasticity from a data frame with the predicted elasticity.
+    The result of this function is used to evaluate if a casual model is detecting the heterogeneity in treatment response.
+
+    Args:
+        df (pd.DataFrame): DataFrame resulted with a elasticity prediction.
+        predicted_elasticity (str): Column name of the predicted elasticity variable.
+        y (str): Column name of the response variable (y).
+        t (str): Column name of the treatment variable (t).
+        min_units (int, optional): Number of units to add in each step. Defaults to 30.
+        steps (int, optional): [description]. Defaults to 100.
+        z (float, optional): [description]. Defaults to 1.96.
+
+    Raises:
+        ValueError: If 'min_units' value is greater then the number of units in the dataset (df.shape[0]) this error is raised. 
+
+    Returns:
+        pd.DataFrame: [description]
+    """
+    # 1) Computing help values
+    size = df.shape[0]
+    if min_units >= size:
+        raise ValueError('Choose a min_units value that is smaller then the number os units in the dataset.')
+    df_ordered = df.sort_values(predicted_elasticity, ascending=False).reset_index(drop=True)
+    nrows = list(range(min_units, size, size //steps)) + [size]
+
+    df_elasticity_ci = {
+        'units_count': list(),
+        'units_proportion': list(),
+        'cum_elasticity': list(),
+        'lower_ci': list(),
+        'upper_ci': list() 
+    }
+    for rows in nrows:
+        df_elasticity_ci['units_count'].append(rows)
+        df_elasticity_ci['units_proportion'].append(round(rows/max(nrows), 4))
+
+        elasticity = elasticity_ci(df=df_ordered.head(rows), y=y, t=t, z=z)
+        df_elasticity_ci['cum_elasticity'].append(elasticity['elasticity'])
+        df_elasticity_ci['lower_ci'].append(elasticity['lower_ci'])
+        df_elasticity_ci['upper_ci'].append(elasticity['upper_ci'])
+
+    df_elasticity_ci = pd.DataFrame.from_dict(df_elasticity_ci)
+
+    return df_elasticity_ci

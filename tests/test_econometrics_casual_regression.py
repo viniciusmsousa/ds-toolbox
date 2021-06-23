@@ -1,4 +1,4 @@
-from ds_toolbox.econometrics.casual_regression import create_sm_formula, linear_coefficient, elasticity_ci
+from ds_toolbox.econometrics.casual_regression import create_sm_formula, linear_coefficient, elasticity_ci, compute_cum_elasticity
 
 def test_create_sm_formula():
 
@@ -52,3 +52,9 @@ def test_elasticity_ci(df_ice_cream):
         'upper_ci': 1.5474594633346184
     }
     assert elasticity_ci(df=df_ice_cream, y='sales', t='price', z=1.96) == d
+
+def test_compute_cum_elasticity(df_test_compute_cum_elasticity, df_test_compute_cum_elasticity_output):
+    df_test = compute_cum_elasticity(
+        df=df_test_compute_cum_elasticity, predicted_elasticity='pred_elasticity', y='sales(X)', t='price(X)', min_units=30, steps=40, z=1.96
+    )
+    assert all(round(df_test, 3) == round(df_test_compute_cum_elasticity_output, 3))

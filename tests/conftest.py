@@ -65,3 +65,11 @@ def dfs_ab_test_pairwise(spark, df_ab_test_pairwise):
 @fixture
 def df_ice_cream():
     return pd.read_csv('tests/data/ice_creams.csv')
+
+@fixture
+def df_test_compute_cum_elasticity():
+    return pd.read_csv('tests/data/df_test_compute_cum_elasticity.csv')
+
+@fixture
+def df_test_compute_cum_elasticity_output():
+    return pd.read_csv('tests/data/df_test_compute_cum_elasticity_output.csv')
