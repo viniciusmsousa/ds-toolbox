@@ -64,4 +64,4 @@ def dfs_ab_test_pairwise(spark, df_ab_test_pairwise):
 
 @fixture
 def df_ice_cream():
-    return pd.read_csv('data/ice_creams.csv')
+    return pd.read_csv('tests/data/ice_creams.csv')
