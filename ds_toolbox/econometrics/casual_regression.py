@@ -1,6 +1,8 @@
 from typing import Union, List
-from typeguard import typechecked
 
+from typeguard import typechecked
+import pandas as pd
+import numpy as np
 
 @typechecked
 def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, categorical_regressors: Union[None, List] = None, treatment_col: Union[None, str] = None):
@@ -36,3 +38,18 @@ def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, cate
         else:
             fit_formula = f'{y} ~ {treatment_col}*' + f' + {treatment_col}*'.join(numeric_regressors) + f' + {treatment_col}*' + f' + {treatment_col}*'.join([f'C({f})' for f in categorical_regressors])
     return fit_formula
+
+@typechecked
+def linear_coefficient(df: pd.DataFrame, y: str, x: str):
+    """Computes the linear regression coefficient (OLS).
+
+    Args:
+        data (pd.DataFrame): pd.DataFrame.
+        y (str): column name of the y variable.
+        x (str): columns name of the regressor variable.
+
+    Returns:
+        np.float64: The linear coefficient.
+    """
+    return (np.sum((df[x] - df[x].mean())*(df[y] - df[y].mean())) / np.sum((df[x] - df[x].mean())**2))
+
