@@ -12,6 +12,14 @@ tests.conftest module
    :undoc-members:
    :show-inheritance:
 
+tests.test\_econometrics\_causal\_regression module
+---------------------------------------------------
+
+.. automodule:: tests.test_econometrics_causal_regression
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_ml\_evaluator module
 --------------------------------
 

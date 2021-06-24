@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tests package &mdash; DS-ToolBox 0.2.0 documentation</title>
+  <title>tests package &mdash; ds-toolbox 0.2.0 documentation</title>
   
 
   
@@ -40,7 +40,8 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="ds_toolbox.ml package" href="ds_toolbox.ml.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -54,7 +55,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> DS-ToolBox
+            <a href="index.html" class="icon icon-home"> ds-toolbox
           
 
           
@@ -86,8 +87,20 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">ds-toolbox</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">ds-toolbox</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="ds_toolbox.html">ds_toolbox package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">tests package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.conftest">tests.conftest module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.test_econometrics_causal_regression">tests.test_econometrics_causal_regression module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.test_ml_evaluator">tests.test_ml_evaluator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests.test_statistics">tests.test_statistics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -103,7 +116,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">DS-ToolBox</a>
+          <a href="index.html">ds-toolbox</a>
         
       </nav>
 
@@ -135,6 +148,8 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">ds-toolbox</a> &raquo;</li>
         
       <li>tests package</li>
     
@@ -245,6 +260,34 @@ pickle.dump(t, test_file_causal_regression)</p>
 <dd></dd></dl>
 
 </div>
+<div class="section" id="module-tests.test_econometrics_causal_regression">
+<span id="tests-test-econometrics-causal-regression-module"></span><h2>tests.test_econometrics_causal_regression module<a class="headerlink" href="#module-tests.test_econometrics_causal_regression" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_econometrics_causal_regression.test_CausalRegression_class">
+<span class="sig-prename descclassname"><span class="pre">tests.test_econometrics_causal_regression.</span></span><span class="sig-name descname"><span class="pre">test_CausalRegression_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_ice_cream</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loaded_CausalRegression_instance</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_econometrics_causal_regression.test_CausalRegression_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_econometrics_causal_regression.test_compute_cum_elasticity">
+<span class="sig-prename descclassname"><span class="pre">tests.test_econometrics_causal_regression.</span></span><span class="sig-name descname"><span class="pre">test_compute_cum_elasticity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_test_compute_cum_elasticity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test_compute_cum_elasticity_output</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_econometrics_causal_regression.test_compute_cum_elasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_econometrics_causal_regression.test_create_sm_formula">
+<span class="sig-prename descclassname"><span class="pre">tests.test_econometrics_causal_regression.</span></span><span class="sig-name descname"><span class="pre">test_create_sm_formula</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_econometrics_causal_regression.test_create_sm_formula" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_econometrics_causal_regression.test_elasticity_ci">
+<span class="sig-prename descclassname"><span class="pre">tests.test_econometrics_causal_regression.</span></span><span class="sig-name descname"><span class="pre">test_elasticity_ci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_ice_cream</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_econometrics_causal_regression.test_elasticity_ci" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_econometrics_causal_regression.test_linear_coefficient">
+<span class="sig-prename descclassname"><span class="pre">tests.test_econometrics_causal_regression.</span></span><span class="sig-name descname"><span class="pre">test_linear_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_ice_cream</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.test_econometrics_causal_regression.test_linear_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-tests.test_ml_evaluator">
 <span id="tests-test-ml-evaluator-module"></span><h2>tests.test_ml_evaluator module<a class="headerlink" href="#module-tests.test_ml_evaluator" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
@@ -306,6 +349,9 @@ pickle.dump(t, test_file_causal_regression)</p>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ds_toolbox.ml.html" class="btn btn-neutral float-left" title="ds_toolbox.ml package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

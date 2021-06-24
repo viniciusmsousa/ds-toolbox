@@ -5,3 +5,4 @@ ds-toolbox
    :maxdepth: 4
 
    ds_toolbox
+   tests

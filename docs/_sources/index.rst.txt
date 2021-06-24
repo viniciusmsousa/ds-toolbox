@@ -1,9 +1,9 @@
-.. DS-ToolBox documentation master file, created by
-   sphinx-quickstart on Tue Jun  8 14:06:49 2021.
+.. ds-toolbox documentation master file, created by
+   sphinx-quickstart on Thu Jun 24 19:11:13 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to DS-ToolBox's documentation!
+Welcome to ds-toolbox's documentation!
 ======================================
 
 .. toctree::
@@ -11,7 +11,6 @@ Welcome to DS-ToolBox's documentation!
    :caption: Contents:
 
    modules
-
 
 
 Indices and tables

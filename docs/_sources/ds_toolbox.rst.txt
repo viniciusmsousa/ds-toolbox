@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   ds_toolbox.econometrics
    ds_toolbox.ml
 
 Submodules
