@@ -31,3 +31,6 @@ pip install git+https://github.com/viniciusmsousa/ds-toolbox.git#main
 - ml:
     - evaluator:
         - `binary_classifier_metrics`: Computes classification metrics (confusion_matrix, accuracy, f1, precision, recall, aucroc, aucpr) based on a dataframe (SparkDF or PandasDF) with ground truth and prediction.
+- econometrics:
+    - causal_regression:
+        - `Causalregression`: A class built on top of what is presented in the chapters 19-21 from the book [Causal Inference for The Brave and True](https://github.com/matheusfacure/python-causality-handbook/tree/master).

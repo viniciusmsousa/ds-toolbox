@@ -68,7 +68,6 @@ def test_CausalRegression_class(df_ice_cream, loaded_CausalRegression_instance):
         t='price',
         numeric_regressors = ['temp', 'cost'],
         categorical_regressors = ['weekday'],
-        test_size = 0.5,
         h = 0.01
     )
 

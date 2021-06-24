@@ -4,7 +4,7 @@ from statsmodels import formula
 from typeguard import typechecked
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+import statsmodels as sm
 import statsmodels.formula.api as smf
 import seaborn as sns
 
@@ -132,90 +132,145 @@ def compute_cum_elasticity(df: pd.DataFrame, predicted_elasticity: str, y: str, 
 
     return df_elasticity_ci
 
-def predict_elast(model, df_test, t, h=0.01):
+@typechecked
+def predict_elast(
+    model: sm.regression.linear_model.RegressionResultsWrapper,
+    df_test: pd.DataFrame,
+    t: str,
+    h: float = 0.01
+) -> pd.core.series.Series:
+    """Please refer to the CausalRegression class for a documentation.
+    This function is used internally.
+
+    Args:
+        model (sm.regression.linear_model.RegressionResultsWrapper): A trained elasticity statsmodel model.
+        df_test (pd.DataFrame): test DataFrame.
+        t (str): Treatment column name.
+        h (float, optional): Value to add to treatment column to compute the elasticity. Defaults to 0.01.
+
+    Returns:
+        float: Elasticity of the treatment column in the response variable from model.
+    """
     return (model.predict(df_test.assign(t = df_test[t] + h).drop(columns = {t}).rename(columns={'t':t})) - model.predict(df_test)) / h
 
 class CausalRegression:
+    """Class that provides the fit on train data and evaluate on test data the elasticity of a treatment on a response variable.
+    The objective is to separate the units from the dataset (customer, stores, etc.) according to the sensitivity os their response.
+    The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
+    https://github.com/matheusfacure/python-causality-handbook/tree/master.
+
+    Attributes:
+        formula_multiplicative_treatment_term (str): The formula of the multiplicative model, e.g., 'y ~ t*categorical_variables + t*numeric_variables + e'.
+        m_elasticity (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_multiplicative_treatment_term in the df_train.
+        formula_y_x (str): The formula of the y variable dependent on the categorical and numeric features, e.g., 'y ~ categorical_variables + numeric_variables + e'.
+        my (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_y_x in the df_train.
+        formula_t_x (str): The formula of the t variable dependent on the categorical and numeric features, e.g., 't ~ categorical_variables + numeric_variables + e'.
+        mt (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_t_x in the df_train.
+        test_unbiased (pd.DataFrame): DataFrame with the original coluns, unbiased columns and predicted elasticity of the df_test.
+        df_elasticity_ci (pd.DataFrame): DataFrame with cumulative elasticity (see the method plot_cumulative_elasticity_curve).
+
+    Methods:
+        fit_causal_regression: Fits the causal regression This method is called when the class is initiated.
+        plot_cumulative_elasticity_curve: plots the cumulative elasticity curve. See chapter 20 os the book referenced in the class description.
+    """
     @typechecked
     def __init__(
-        self, df: pd.DataFrame, y: str, t: str,
+        self, df_train: pd.DataFrame, df_test: pd.DataFrame, y: str, t: str,
         numeric_regressors: Union[None, List], categorical_regressors: Union[None, List],
-        test_size: float = 0.4, h:float = 0.01 
+        h:float = 0.01 
     ):
+        """Initiates the Class CausalRegression. This will compute the fit_causal_regression()
+        method.
+
+        Args:
+            df_train (pd.DataFrame): Train DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+            df_test (pd.DataFrame): Test DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+            y (str): Column name of the response variable.
+            t (str): Column name of the treatment variable.
+            numeric_regressors (Union[None, List]): Column names of the numeric regressors.
+            categorical_regressors (Union[None, List]): Column names of the categorical regressors.
+            h (float, optional): Value to be added to each treatment in order to estimate the elasticity. Defaults to 0.01.
+        """
         # Param Values
-        self.df = df
+        self.df_train = df_train
+        self.df_test = df_test
         self.y = y
         self.t = t
         self.numeric_regressors = numeric_regressors
         self.categorical_regressors = categorical_regressors
-        self.test_size = test_size
         self.h = h
 
         # Fitting the Causal Regression
         self.fit_causal_regression()
+        self.df_elasticity_ci = compute_cum_elasticity(df=self.df_test_unbiased, predicted_elasticity='pred_elasticity', y = f'{self.y}(X)', t = f'{self.t}(X)', min_units = 30, steps = 100, z = 1.96)
     
     def fit_causal_regression(self):
-        """This function computes the causal regression.
+        """This function computes the causal regression. The steps are [to-do]
         """
-        # 1) Train/Test Split
-        train, test = train_test_split(self.df, test_size=self.test_size)
 
-        self.train = train
-        self.test = test
-
-        # 2) Model Fit (Regression with Multiplicative terms)
+        # 1) Model Fit with Trainning Set (Regression with Multiplicative terms)
         formula_multiplicative_treatment_term = create_sm_formula(
-            y=self.y, numeric_regressors=self.numeric_regressors,
+            y=self.y, treatment_col=self.t,
+            numeric_regressors=self.numeric_regressors,
             categorical_regressors=self.categorical_regressors
         )
-        m_elasticity = smf.ols(formula_multiplicative_treatment_term, data=train).fit()
+        m_elasticity = smf.ols(formula_multiplicative_treatment_term, data=self.df_train).fit()
 
         self.formula_multiplicative_treatment_term = formula_multiplicative_treatment_term
         self.m_elasticity = m_elasticity
 
-        # 3) Evaluating the Model (Cumulative Elasticity Curve)
-        ## 3i) Removing the Cofounding Bias (Frisch-Waugh-Lovell [1933] Teorem)
-        ### 3ia) Estimating the treatment from the features
+        # 2) Evaluating the Model (Cumulative Elasticity Curve)
+        ## 2i) Removing the Cofounding Bias (Frisch-Waugh-Lovell [1933] Teorem)
+        ### 2ia) Estimating the treatment from the features
         formula_t_x = create_sm_formula(
             y=self.t, numeric_regressors=self.numeric_regressors,
             categorical_regressors=self.categorical_regressors
         )
-        mt = smf.ols(formula_t_x, data=train).fit()        
+        mt = smf.ols(formula_t_x, data=self.df_train).fit()        
 
         self.formula_t_x = formula_t_x
         self.mt = mt
 
-        ### 3ib) Estimating the response (y) variable from the features
+        ### 2ib) Estimating the response (y) variable from the features
         formula_y_x = create_sm_formula(
             y=self.y, numeric_regressors=self.numeric_regressors,
             categorical_regressors=self.categorical_regressors
         )
-        my = smf.ols(formula_y_x, data=train).fit()
+        my = smf.ols(formula_y_x, data=self.df_train).fit()
 
         self.formula_y_x = formula_y_x
         self.my = my
 
-        ## 3ii) Adding the unbiased response and treatment values to the test set
-        test_unbiased = test.assign(**{
-            f'{self.y}(X)': test[self.y] - my.predict(test),
-            f'{self.t}(X)': test[self.t] - mt.predict(test)
+        ## 2ii) Adding the unbiased response and treatment values to the test set
+        df_test_unbiased = self.df_test.assign(**{
+            f'{self.y}(X)': self.df_test[self.y] - my.predict(self.df_test),
+            f'{self.t}(X)': self.df_test[self.t] - mt.predict(self.df_test)
         })
 
-        ## 3iii) Predicting the Elasticity in the test dataset
-        test_unbiased = test_unbiased.assign(**{
+        ## 2iii) Predicting the Elasticity in the test dataset
+        df_test_unbiased = df_test_unbiased.assign(**{
             'pred_elasticity': predict_elast(
                 model=self.m_elasticity,
-                df_test=self.test,
+                df_test=self.df_test,
                 t=self.t,
                 h=self.h
             )
         })
-        self.test_unbiased = test_unbiased
+        self.df_test_unbiased = df_test_unbiased
 
     @typechecked
-    def plot_cumulativa_elasticity_curve(self, min_units: int = 30, steps: int = 100, z: float = 1.96):
-        df_elasticity_ci = compute_cum_elasticity(df=self.test_unbiased, predicted_elasticity='pred_elasticity', y = f'{self.y}(X)', t = f'{self.t}(X)', min_units = 30, steps = 100, z = 1.96)
-        self.df_elasticity_ci = df_elasticity_ci
+    def plot_cumulative_elasticity_curve(self, title: str = 'Cumulative Elasticity', min_units: int = 30, steps: int = 100, z: float = 1.96):
+        """Plots the cumulative elastocity curve. See chapter 20 of the book indicated in the class init.
+
+        Args:
+            title (str, optional): Plot Title. Defaults to 'Cumulative Elasticity'.
+            min_units (int, optional): Number of units in the first bin. Defaults to 30.
+            steps (int, optional): Number of total buckets. Defaults to 100.
+            z (float, optional): z-value for the normal distribution. Default value sets a 95% confidence interval. Defaults to 1.96.
+
+        Returns:
+            seabornplot
+        """
         plot = sns.lineplot(
             data=pd.melt(self.df_elasticity_ci, id_vars=['units_count', 'units_proportion']),
             x='units_proportion',
@@ -223,6 +278,7 @@ class CausalRegression:
             hue='variable',
             palette = ['black', 'gray', 'gray']
         )
+        plot.set(title=title)
         plot.axhline(0, **{'c': 'lightgray'})
         plot.axhline(linear_coefficient(self.test_unbiased, y=f'{self.y}(X)', x=f'{self.t}(X)'), **{'ls':'--', 'c':'gray', 'label':'Average Elasticity'})
         return plot
