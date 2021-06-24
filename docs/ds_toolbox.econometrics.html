@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ds_toolbox.econometrics package &mdash; DS-ToolBox 0.2.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> DS-ToolBox
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">ds-toolbox</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DS-ToolBox</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ds_toolbox.econometrics package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ds_toolbox.econometrics.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ds-toolbox-econometrics-package">
+<h1>ds_toolbox.econometrics package<a class="headerlink" href="#ds-toolbox-econometrics-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-ds_toolbox.econometrics.causal_regression">
+<span id="ds-toolbox-econometrics-causal-regression-module"></span><h2>ds_toolbox.econometrics.causal_regression module<a class="headerlink" href="#module-ds_toolbox.econometrics.causal_regression" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.CausalRegression">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">CausalRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.CausalRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that provides the fit on train data and evaluate on test data the elasticity of a treatment on a response variable.
+The objective is to separate the units from the dataset (customer, stores, etc.) according to the sensitivity os their response.
+The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
+<a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/tree/master">https://github.com/matheusfacure/python-causality-handbook/tree/master</a>.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>formula_multiplicative_treatment_term (str): The formula of the multiplicative model, e.g., ‘y ~ t*categorical_variables + t*numeric_variables + e’.
+m_elasticity (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_multiplicative_treatment_term in the df_train.
+formula_y_x (str): The formula of the y variable dependent on the categorical and numeric features, e.g., ‘y ~ categorical_variables + numeric_variables + e’.
+my (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_y_x in the df_train.
+formula_t_x (str): The formula of the t variable dependent on the categorical and numeric features, e.g., ‘t ~ categorical_variables + numeric_variables + e’.
+mt (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_t_x in the df_train.
+test_unbiased (pd.DataFrame): DataFrame with the original coluns, unbiased columns and predicted elasticity of the df_test.
+df_elasticity_ci (pd.DataFrame): DataFrame with cumulative elasticity (see the method plot_cumulative_elasticity_curve).</p>
+</dd>
+<dt>Methods:</dt><dd><p>fit_causal_regression: Fits the causal regression This method is called when the class is initiated.
+plot_cumulative_elasticity_curve: plots the cumulative elasticity curve. See chapter 20 os the book referenced in the class description.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.CausalRegression.fit_causal_regression">
+<span class="sig-name descname"><span class="pre">fit_causal_regression</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.CausalRegression.fit_causal_regression" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function computes the causal regression. The steps are [to-do]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.CausalRegression.plot_cumulative_elasticity_curve">
+<span class="sig-name descname"><span class="pre">plot_cumulative_elasticity_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'Cumulative</span> <span class="pre">Elasticity'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_units</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1.96</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.CausalRegression.plot_cumulative_elasticity_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the cumulative elastocity curve. See chapter 20 of the book indicated in the class init.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>title (str, optional): Plot Title. Defaults to ‘Cumulative Elasticity’.
+min_units (int, optional): Number of units in the first bin. Defaults to 30.
+steps (int, optional): Number of total buckets. Defaults to 100.
+z (float, optional): z-value for the normal distribution. Default value sets a 95% confidence interval. Defaults to 1.96.</p>
+</dd>
+<dt>Returns:</dt><dd><p>seabornplot</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.compute_cum_elasticity">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">compute_cum_elasticity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_elasticity</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_units</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1.96</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.compute_cum_elasticity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cumulative elasticity from a data frame with the predicted elasticity.
+The result of this function is used to evaluate if a casual model is detecting the heterogeneity in treatment response.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>df (pd.DataFrame): DataFrame resulted with a elasticity prediction.
+predicted_elasticity (str): Column name of the predicted elasticity variable.
+y (str): Column name of the response variable (y).
+t (str): Column name of the treatment variable (t).
+min_units (int, optional): Number of units to add in each step. Defaults to 30.
+steps (int, optional): [description]. Defaults to 100.
+z (float, optional): [description]. Defaults to 1.96.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If ‘min_units’ value is greater then the number of units in the dataset (df.shape[0]) this error is raised.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: [description]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.create_sm_formula">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">create_sm_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">treatment_col</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.create_sm_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a formula to be passed to a import statsmodels.formula.api.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>y (str): Name of the y variable.
+numeric_regressors (Union[None, List], optional): List with name of the numeric regressors. Defaults to None.
+categorical_regressors (Union[None, List], optional): List os strings with the names of categorical regressors. Defaults to None.
+treatment_col (Union[None, str], optional): Name with the name of the treatment variable. Defaults to None.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: At least one of numeric_regressors or categorical_regressors must be not None. If both are None ValueError will be raised</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: str with the formula to be passed to a statsmodels.formula.api function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.elasticity_ci">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">elasticity_ci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1.96</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.elasticity_ci" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the confidence interval of a linear coefficient of a regression.
+Used to compute the elasticity confidence interval.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>df (pd.DataFrame): Data Frame with y and t columns.
+y (str): Column name of the y variable.
+t (str): Column name of the treatment variable.
+z (float, optional): z value for the normal distribution. Defaults to 1.96.</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: dict in the form {‘elasticity’: float, ‘lower_ci’: float, ‘upper_ci’: float}.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.linear_coefficient">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">linear_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.float64</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.linear_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the linear regression coefficient (OLS).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data (pd.DataFrame): pd.DataFrame.
+y (str): column name of the y variable.
+x (str): columns name of the regressor variable.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.float64: The linear coefficient.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.predict_elast">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">predict_elast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">statsmodels.regression.linear_model.RegressionResultsWrapper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.series.Series</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.predict_elast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Please refer to the CausalRegression class for a documentation.
+This function is used internally.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>model (sm.regression.linear_model.RegressionResultsWrapper): A trained elasticity statsmodel model.
+df_test (pd.DataFrame): test DataFrame.
+t (str): Treatment column name.
+h (float, optional): Value to add to treatment column to compute the elasticity. Defaults to 0.01.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: Elasticity of the treatment column in the response variable from model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ds_toolbox.econometrics">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ds_toolbox.econometrics" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Vinicius M Sousa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

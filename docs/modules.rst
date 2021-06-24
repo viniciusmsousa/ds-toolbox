@@ -1,8 +1,0 @@
-ds-toolbox
-==========
-
-.. toctree::
-   :maxdepth: 4
-
-   ds_toolbox
-   tests
