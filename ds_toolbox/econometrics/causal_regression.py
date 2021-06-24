@@ -1,8 +1,12 @@
 from typing import Union, List
+from statsmodels import formula
 
 from typeguard import typechecked
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
+import statsmodels.formula.api as smf
+import seaborn as sns
 
 @typechecked
 def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, categorical_regressors: Union[None, List] = None, treatment_col: Union[None, str] = None):
@@ -127,3 +131,98 @@ def compute_cum_elasticity(df: pd.DataFrame, predicted_elasticity: str, y: str, 
     df_elasticity_ci = pd.DataFrame.from_dict(df_elasticity_ci)
 
     return df_elasticity_ci
+
+def predict_elast(model, df_test, t, h=0.01):
+    return (model.predict(df_test.assign(t = df_test[t] + h).drop(columns = {t}).rename(columns={'t':t})) - model.predict(df_test)) / h
+
+class CausalRegression:
+    @typechecked
+    def __init__(
+        self, df: pd.DataFrame, y: str, t: str,
+        numeric_regressors: Union[None, List], categorical_regressors: Union[None, List],
+        test_size: float = 0.4, h:float = 0.01 
+    ):
+        # Param Values
+        self.df = df
+        self.y = y
+        self.t = t
+        self.numeric_regressors = numeric_regressors
+        self.categorical_regressors = categorical_regressors
+        self.test_size = test_size
+        self.h = h
+
+        # Fitting the Causal Regression
+        self.fit_causal_regression()
+    
+    def fit_causal_regression(self):
+        """This function computes the causal regression.
+        """
+        # 1) Train/Test Split
+        train, test = train_test_split(self.df, test_size=self.test_size)
+
+        self.train = train
+        self.test = test
+
+        # 2) Model Fit (Regression with Multiplicative terms)
+        formula_multiplicative_treatment_term = create_sm_formula(
+            y=self.y, numeric_regressors=self.numeric_regressors,
+            categorical_regressors=self.categorical_regressors
+        )
+        m_elasticity = smf.ols(formula_multiplicative_treatment_term, data=train).fit()
+
+        self.formula_multiplicative_treatment_term = formula_multiplicative_treatment_term
+        self.m_elasticity = m_elasticity
+
+        # 3) Evaluating the Model (Cumulative Elasticity Curve)
+        ## 3i) Removing the Cofounding Bias (Frisch-Waugh-Lovell [1933] Teorem)
+        ### 3ia) Estimating the treatment from the features
+        formula_t_x = create_sm_formula(
+            y=self.t, numeric_regressors=self.numeric_regressors,
+            categorical_regressors=self.categorical_regressors
+        )
+        mt = smf.ols(formula_t_x, data=train).fit()        
+
+        self.formula_t_x = formula_t_x
+        self.mt = mt
+
+        ### 3ib) Estimating the response (y) variable from the features
+        formula_y_x = create_sm_formula(
+            y=self.y, numeric_regressors=self.numeric_regressors,
+            categorical_regressors=self.categorical_regressors
+        )
+        my = smf.ols(formula_y_x, data=train).fit()
+
+        self.formula_y_x = formula_y_x
+        self.my = my
+
+        ## 3ii) Adding the unbiased response and treatment values to the test set
+        test_unbiased = test.assign(**{
+            f'{self.y}(X)': test[self.y] - my.predict(test),
+            f'{self.t}(X)': test[self.t] - mt.predict(test)
+        })
+
+        ## 3iii) Predicting the Elasticity in the test dataset
+        test_unbiased = test_unbiased.assign(**{
+            'pred_elasticity': predict_elast(
+                model=self.m_elasticity,
+                df_test=self.test,
+                t=self.t,
+                h=self.h
+            )
+        })
+        self.test_unbiased = test_unbiased
+
+    @typechecked
+    def plot_cumulativa_elasticity_curve(self, min_units: int = 30, steps: int = 100, z: float = 1.96):
+        df_elasticity_ci = compute_cum_elasticity(df=self.test_unbiased, predicted_elasticity='pred_elasticity', y = f'{self.y}(X)', t = f'{self.t}(X)', min_units = 30, steps = 100, z = 1.96)
+        self.df_elasticity_ci = df_elasticity_ci
+        plot = sns.lineplot(
+            data=pd.melt(self.df_elasticity_ci, id_vars=['units_count', 'units_proportion']),
+            x='units_proportion',
+            y='value',
+            hue='variable',
+            palette = ['black', 'gray', 'gray']
+        )
+        plot.axhline(0, **{'c': 'lightgray'})
+        plot.axhline(linear_coefficient(self.test_unbiased, y=f'{self.y}(X)', x=f'{self.t}(X)'), **{'ls':'--', 'c':'gray', 'label':'Average Elasticity'})
+        return plot
