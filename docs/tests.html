@@ -192,6 +192,11 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.df_ice_cream">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_ice_cream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_ice_cream" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.conftest.df_ks">
 <span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_ks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_ks" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -199,6 +204,16 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.conftest.df_mannwhitney">
 <span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_mannwhitney</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_mannwhitney" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.df_test_compute_cum_elasticity">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_test_compute_cum_elasticity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_test_compute_cum_elasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.df_test_compute_cum_elasticity_output">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">df_test_compute_cum_elasticity_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.df_test_compute_cum_elasticity_output" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -210,6 +225,33 @@
 <dt class="sig sig-object py" id="tests.conftest.dfs_binary_classification_prediction">
 <span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">dfs_binary_classification_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spark</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_binary_classification_prediction</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.dfs_binary_classification_prediction" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.conftest.loaded_CausalRegression_instance">
+<span class="sig-prename descclassname"><span class="pre">tests.conftest.</span></span><span class="sig-name descname"><span class="pre">loaded_CausalRegression_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tests.conftest.loaded_CausalRegression_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ground truth to test CausalRegression Class.
+Code that generated the instance</p>
+<blockquote>
+<div><p>import pickle  
+import pandas as pd
+from ds_toolbox.econometrics.causal_regression import CausalRegression</p>
+<p>prices = pd.read_csv(“tests/data/ice_creams.csv”)
+t = CausalRegression(</p>
+<blockquote>
+<div><p>df_train=prices.head(5000),
+df_test=prices.tail(5000),
+y=’sales’,
+t=’price’,
+numeric_regressors = [‘temp’, ‘cost’],
+categorical_regressors = [‘weekday’],
+test_size = 0.5,
+h = 0.01</p>
+</div></blockquote>
+<p>)</p>
+<p>test_file_causal_regression = open(‘tests/data/test_CausalRegression.pk’, ‘wb’) 
+pickle.dump(t, test_file_causal_regression)</p>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tests.conftest.spark">
