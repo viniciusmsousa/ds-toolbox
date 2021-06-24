@@ -1,3 +1,4 @@
+import pickle
 from numpy import random
 import pandas as pd
 from pytest import fixture
@@ -73,3 +74,28 @@ def df_test_compute_cum_elasticity():
 @fixture
 def df_test_compute_cum_elasticity_output():
     return pd.read_csv('tests/data/df_test_compute_cum_elasticity_output.csv')
+
+@fixture
+def loaded_CausalRegression_instance():
+    """Ground truth to test CausalRegression Class.
+    Code that generated the instance
+        import pickle  
+        import pandas as pd
+        from ds_toolbox.econometrics.causal_regression import CausalRegression
+
+        prices = pd.read_csv("tests/data/ice_creams.csv")
+        t = CausalRegression(
+            df_train=prices.head(5000),
+            df_test=prices.tail(5000),
+            y='sales',
+            t='price',
+            numeric_regressors = ['temp', 'cost'],
+            categorical_regressors = ['weekday'],
+            test_size = 0.5,
+            h = 0.01
+        )
+
+        test_file_causal_regression = open('tests/data/test_CausalRegression.pk', 'wb') 
+        pickle.dump(t, test_file_causal_regression)
+    """
+    return pickle.load(open('tests/data/test_CausalRegression.pk', 'rb'))
