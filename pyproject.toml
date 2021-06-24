@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ds-toolbox"
-version = "0.1.4"
+version = "0.2.0"
 description = "A ToolBox with daily helpers for the analytical part of a Data Scientist."
 authors = ["viniciusmsousa <vinisousa04@gmail.com>"]
 documentation = "https://viniciusmsousa.github.io/ds-toolbox/"
