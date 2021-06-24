@@ -8,6 +8,7 @@ import statsmodels as sm
 import statsmodels.formula.api as smf
 import seaborn as sns
 
+
 @typechecked
 def create_sm_formula(y: str, numeric_regressors: Union[None, List] = None, categorical_regressors: Union[None, List] = None, treatment_col: Union[None, str] = None):
     """Creates a formula to be passed to a import statsmodels.formula.api.
@@ -152,6 +153,7 @@ def predict_elast(
         float: Elasticity of the treatment column in the response variable from model.
     """
     return (model.predict(df_test.assign(t = df_test[t] + h).drop(columns = {t}).rename(columns={'t':t})) - model.predict(df_test)) / h
+
 
 class CausalRegression:
     """Class that provides the fit on train data and evaluate on test data the elasticity of a treatment on a response variable.

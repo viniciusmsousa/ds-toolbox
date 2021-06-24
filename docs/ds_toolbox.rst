@@ -1,0 +1,38 @@
+ds\_toolbox package
+===================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   ds_toolbox.econometrics
+   ds_toolbox.ml
+
+Submodules
+----------
+
+ds\_toolbox.spark\_utils module
+-------------------------------
+
+.. automodule:: ds_toolbox.spark_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ds\_toolbox.statistics module
+-----------------------------
+
+.. automodule:: ds_toolbox.statistics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ds_toolbox
+   :members:
+   :undoc-members:
+   :show-inheritance:
