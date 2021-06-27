@@ -1,3 +1,10 @@
+"""Causal Regression
+
+This module provides the fit on train data and evaluate on test data the elasticity of a treatment on a response variable.
+The objective is to separate the units from the dataset (customer, stores, etc.) according to the sensitivity os their response.
+The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
+https://github.com/matheusfacure/python-causality-handbook/tree/master.
+"""
 from typing import Union, List
 
 from typeguard import typechecked
