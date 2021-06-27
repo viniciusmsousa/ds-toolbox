@@ -97,8 +97,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.spark_utils">ds_toolbox.spark_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.statistics">ds_toolbox.statistics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.utils">ds_toolbox.utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox">Module contents</a></li>
 </ul>
 </li>
@@ -183,6 +183,11 @@
 </div>
 <div class="section" id="module-ds_toolbox.econometrics.causal_regression">
 <span id="ds-toolbox-econometrics-causal-regression-module"></span><h2>ds_toolbox.econometrics.causal_regression module<a class="headerlink" href="#module-ds_toolbox.econometrics.causal_regression" title="Permalink to this headline">¶</a></h2>
+<p>Causal Regression</p>
+<p>This module provides the fit on train data and evaluate on test data the elasticity of a treatment on a response variable.
+The objective is to separate the units from the dataset (customer, stores, etc.) according to the sensitivity os their response.
+The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
+<a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/tree/master">https://github.com/matheusfacure/python-causality-handbook/tree/master</a>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="ds_toolbox.econometrics.causal_regression.CausalRegression">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">ds_toolbox.econometrics.causal_regression.</span></span><span class="sig-name descname"><span class="pre">CausalRegression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_train</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numeric_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical_regressors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ds_toolbox.econometrics.causal_regression.CausalRegression" title="Permalink to this definition">¶</a></dt>
@@ -192,6 +197,14 @@ The objective is to separate the units from the dataset (customer, stores, etc.)
 The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
 <a class="reference external" href="https://github.com/matheusfacure/python-causality-handbook/tree/master">https://github.com/matheusfacure/python-causality-handbook/tree/master</a>.</p>
 <dl class="simple">
+<dt>Args:</dt><dd><p>df_train (pd.DataFrame): Train DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+df_test (pd.DataFrame): Test DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+y (str): Column name of the response variable.
+t (str): Column name of the treatment variable.
+numeric_regressors (Union[None, List]): Column names of the numeric regressors.
+categorical_regressors (Union[None, List]): Column names of the categorical regressors.
+h (float, optional): Value to be added to each treatment in order to estimate the elasticity. Defaults to 0.01.</p>
+</dd>
 <dt>Attributes:</dt><dd><p>formula_multiplicative_treatment_term (str): The formula of the multiplicative model, e.g., ‘y ~ t*categorical_variables + t*numeric_variables + e’.
 m_elasticity (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_multiplicative_treatment_term in the df_train.
 formula_y_x (str): The formula of the y variable dependent on the categorical and numeric features, e.g., ‘y ~ categorical_variables + numeric_variables + e’.
