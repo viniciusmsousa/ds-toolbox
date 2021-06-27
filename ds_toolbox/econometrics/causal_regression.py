@@ -1,5 +1,4 @@
 from typing import Union, List
-from statsmodels import formula
 
 from typeguard import typechecked
 import pandas as pd
