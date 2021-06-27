@@ -167,6 +167,15 @@ class CausalRegression:
     The steps taken are based on the chapters 19-21 from the book Causal Inference for The Brave and True that can be found at
     https://github.com/matheusfacure/python-causality-handbook/tree/master.
 
+    Args:
+        df_train (pd.DataFrame): Train DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+        df_test (pd.DataFrame): Test DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
+        y (str): Column name of the response variable.
+        t (str): Column name of the treatment variable.
+        numeric_regressors (Union[None, List]): Column names of the numeric regressors.
+        categorical_regressors (Union[None, List]): Column names of the categorical regressors.
+        h (float, optional): Value to be added to each treatment in order to estimate the elasticity. Defaults to 0.01.
+
     Attributes:
         formula_multiplicative_treatment_term (str): The formula of the multiplicative model, e.g., 'y ~ t*categorical_variables + t*numeric_variables + e'.
         m_elasticity (sm.regression.linear_model.RegressionResultsWrapper): Fitted model of the formula_multiplicative_treatment_term in the df_train.
@@ -188,16 +197,7 @@ class CausalRegression:
         h:float = 0.01 
     ):
         """Initiates the Class CausalRegression. This will compute the fit_causal_regression()
-        method.
-
-        Args:
-            df_train (pd.DataFrame): Train DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
-            df_test (pd.DataFrame): Test DataFrame with the columns y, y, numeric_regressors and categorical_regressors.
-            y (str): Column name of the response variable.
-            t (str): Column name of the treatment variable.
-            numeric_regressors (Union[None, List]): Column names of the numeric regressors.
-            categorical_regressors (Union[None, List]): Column names of the categorical regressors.
-            h (float, optional): Value to be added to each treatment in order to estimate the elasticity. Defaults to 0.01.
+        and compute_cum_elasticity() methods.
         """
         # Param Values
         self.df_train = df_train
