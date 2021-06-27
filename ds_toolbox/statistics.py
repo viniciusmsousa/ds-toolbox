@@ -22,7 +22,7 @@ import pyspark.ml.feature as FF
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-from ds_toolbox.spark_utils import start_local_spark
+from ds_toolbox.utils import start_local_spark
 
 
 @typechecked
