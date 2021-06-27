@@ -1,3 +1,8 @@
+"""Evaluator
+
+This module contains functionalities to help the evaluation of machine learning models.
+"""
+
 from typing import Union
 from typeguard import typechecked
 
