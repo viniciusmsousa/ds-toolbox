@@ -1,3 +1,10 @@
+"""Statistics
+
+This module contains a series of statistical tests built on top of Pandas and SparkDF
+to help the computation and interpretation of the results. 
+
+Each function has its own description and, when relevant, the source of the test.
+"""
 import sys
 from itertools import combinations
 from typing import Union, Dict, Tuple
