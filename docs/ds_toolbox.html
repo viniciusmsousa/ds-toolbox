@@ -97,8 +97,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-ds_toolbox.spark_utils">ds_toolbox.spark_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ds_toolbox.statistics">ds_toolbox.statistics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ds_toolbox.utils">ds_toolbox.utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ds_toolbox">Module contents</a></li>
 </ul>
 </li>
@@ -198,27 +198,12 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-ds_toolbox.spark_utils">
-<span id="ds-toolbox-spark-utils-module"></span><h2>ds_toolbox.spark_utils module<a class="headerlink" href="#module-ds_toolbox.spark_utils" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="ds_toolbox.spark_utils.start_local_spark">
-<span class="sig-prename descclassname"><span class="pre">ds_toolbox.spark_utils.</span></span><span class="sig-name descname"><span class="pre">start_local_spark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_mem</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pyspark.sql.session.SparkSession</span><a class="headerlink" href="#ds_toolbox.spark_utils.start_local_spark" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a local spark session.
-Used to convert pandas DF into spark df for computing a few tests and metrics.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>max_mem (int, optional): Max memory to be allocated. Defaults to 3.
-n_cores (int, optional): Number os cores to be allocated. Defaults to 2.</p>
-</dd>
-<dt>Raises:</dt><dd><p>Exception: Every error.</p>
-</dd>
-<dt>Returns:</dt><dd><p>pyspark.sql.session.SparkSession: spark session object.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
 <div class="section" id="module-ds_toolbox.statistics">
 <span id="ds-toolbox-statistics-module"></span><h2>ds_toolbox.statistics module<a class="headerlink" href="#module-ds_toolbox.statistics" title="Permalink to this headline">¶</a></h2>
+<p>Statistics</p>
+<p>This module contains a series of statistical tests built on top of Pandas and SparkDF
+to help the computation and interpretation of the results.</p>
+<p>Each function has its own description and, when relevant, the source of the test.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ds_toolbox.statistics.ab_test">
 <span class="sig-prename descclassname"><span class="pre">ds_toolbox.statistics.</span></span><span class="sig-name descname"><span class="pre">ab_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g1</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g1_count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_mean</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_std</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g2_count</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="headerlink" href="#ds_toolbox.statistics.ab_test" title="Permalink to this definition">¶</a></dt>
@@ -341,6 +326,27 @@ col_variable (str): Columns name of the numeric variable</p>
 conclusion, group1_more_profitable.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ds_toolbox.utils">
+<span id="ds-toolbox-utils-module"></span><h2>ds_toolbox.utils module<a class="headerlink" href="#module-ds_toolbox.utils" title="Permalink to this headline">¶</a></h2>
+<p>Utils</p>
+<p>Module that contains utilities to support the other modules functionalities.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="ds_toolbox.utils.start_local_spark">
+<span class="sig-prename descclassname"><span class="pre">ds_toolbox.utils.</span></span><span class="sig-name descname"><span class="pre">start_local_spark</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_mem</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pyspark.sql.session.SparkSession</span><a class="headerlink" href="#ds_toolbox.utils.start_local_spark" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a local spark session.
+Used to convert pandas DF into spark df for computing a few tests and metrics.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>max_mem (int, optional): Max memory to be allocated. Defaults to 3.
+n_cores (int, optional): Number os cores to be allocated. Defaults to 2.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: Every error.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pyspark.sql.session.SparkSession: spark session object.</p>
 </dd>
 </dl>
 </dd></dl>

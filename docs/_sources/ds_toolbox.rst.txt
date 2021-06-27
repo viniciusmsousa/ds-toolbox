@@ -13,18 +13,18 @@ Subpackages
 Submodules
 ----------
 
-ds\_toolbox.spark\_utils module
--------------------------------
-
-.. automodule:: ds_toolbox.spark_utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 ds\_toolbox.statistics module
 -----------------------------
 
 .. automodule:: ds_toolbox.statistics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ds\_toolbox.utils module
+------------------------
+
+.. automodule:: ds_toolbox.utils
    :members:
    :undoc-members:
    :show-inheritance:

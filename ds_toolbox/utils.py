@@ -1,3 +1,7 @@
+"""Utils
+
+Module that contains utilities to support the other modules functionalities.
+"""
 from typeguard import typechecked
 import pyspark
 from pyspark.sql import SparkSession

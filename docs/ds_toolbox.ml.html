@@ -97,8 +97,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.spark_utils">ds_toolbox.spark_utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.statistics">ds_toolbox.statistics module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox.utils">ds_toolbox.utils module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ds_toolbox.html#module-ds_toolbox">Module contents</a></li>
 </ul>
 </li>
@@ -183,6 +183,8 @@
 </div>
 <div class="section" id="module-ds_toolbox.ml.evaluator">
 <span id="ds-toolbox-ml-evaluator-module"></span><h2>ds_toolbox.ml.evaluator module<a class="headerlink" href="#module-ds_toolbox.ml.evaluator" title="Permalink to this headline">¶</a></h2>
+<p>Evaluator</p>
+<p>This module contains functionalities to help the evaluation of machine learning models.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="ds_toolbox.ml.evaluator.binary_classifier_metrics">
 <span class="sig-prename descclassname"><span class="pre">ds_toolbox.ml.evaluator.</span></span><span class="sig-name descname"><span class="pre">binary_classifier_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_prediction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pyspark.sql.dataframe.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_target</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_prediction</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spark</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pyspark.sql.session.SparkSession</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_mem</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_cores</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">dict</span><a class="headerlink" href="#ds_toolbox.ml.evaluator.binary_classifier_metrics" title="Permalink to this definition">¶</a></dt>

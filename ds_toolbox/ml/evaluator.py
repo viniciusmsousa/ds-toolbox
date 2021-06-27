@@ -1,3 +1,8 @@
+"""Evaluator
+
+This module contains functionalities to help the evaluation of machine learning models.
+"""
+
 from typing import Union
 from typeguard import typechecked
 
@@ -5,7 +10,7 @@ import pyspark
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 import pandas as pd
 
-from ds_toolbox.spark_utils import start_local_spark
+from ds_toolbox.utils import start_local_spark
 
 @typechecked
 def binary_classifier_metrics(

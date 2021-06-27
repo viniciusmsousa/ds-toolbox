@@ -1,3 +1,10 @@
+"""Statistics
+
+This module contains a series of statistical tests built on top of Pandas and SparkDF
+to help the computation and interpretation of the results. 
+
+Each function has its own description and, when relevant, the source of the test.
+"""
 import sys
 from itertools import combinations
 from typing import Union, Dict, Tuple
@@ -15,7 +22,7 @@ import pyspark.ml.feature as FF
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-from ds_toolbox.spark_utils import start_local_spark
+from ds_toolbox.utils import start_local_spark
 
 
 @typechecked
