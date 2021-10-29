@@ -199,6 +199,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "descartes"
+version = "1.1.0"
+description = "Use geometric objects as matplotlib paths and patches"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+matplotlib = "*"
+
+[[package]]
 name = "docutils"
 version = "0.16"
 description = "Docutils -- Python Documentation Utilities"
@@ -548,6 +559,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "mizani"
+version = "0.7.3"
+description = "Scales for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+matplotlib = ">=3.1.1"
+numpy = "*"
+palettable = "*"
+pandas = ">=1.1.0"
+
+[[package]]
 name = "nbclient"
 version = "0.5.3"
 description = "A client library for executing notebooks. Formerly nbconvert's ExecutePreprocessor."
@@ -672,6 +697,14 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 pyparsing = ">=2.0.2"
 
 [[package]]
+name = "palettable"
+version = "3.3.0"
+description = "Color palettes for Python"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pandas"
 version = "1.2.4"
 description = "Powerful data structures for data analysis, time series, and statistics"
@@ -745,6 +778,27 @@ description = "Python Imaging Library (Fork)"
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[[package]]
+name = "plotnine"
+version = "0.8.0"
+description = "A grammar of graphics for python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+descartes = ">=1.1.0"
+matplotlib = ">=3.1.1"
+mizani = ">=0.7.3"
+numpy = ">=1.19.0"
+pandas = ">=1.1.0"
+patsy = ">=0.5.1"
+scipy = ">=1.5.0"
+statsmodels = ">=0.12.1"
+
+[package.extras]
+all = ["scikit-learn", "scikit-misc"]
 
 [[package]]
 name = "pluggy"
@@ -1374,7 +1428,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.10"
-content-hash = "31b825b3475749cb3f1492036e80c17dde41ceb30259e6ad67c133b0af48794b"
+content-hash = "0d89a90d95b06418b86d4ffe7f063372315a5264b32d603a3940c4b149c3d899"
 
 [metadata.files]
 alabaster = [
@@ -1608,6 +1662,11 @@ defusedxml = [
     {file = "defusedxml-0.7.1-py2.py3-none-any.whl", hash = "sha256:a352e7e428770286cc899e2542b6cdaedb2b4953ff269a210103ec58f6198a61"},
     {file = "defusedxml-0.7.1.tar.gz", hash = "sha256:1bb3032db185915b62d7c6209c5a8792be6a32ab2fedacc84e01b52c51aa3e69"},
 ]
+descartes = [
+    {file = "descartes-1.1.0-py2-none-any.whl", hash = "sha256:b7e412e7e6e294412f1d0f661f187babc970088c2456089e6801eebb043c2e1b"},
+    {file = "descartes-1.1.0-py3-none-any.whl", hash = "sha256:4c62dc41109689d03e4b35de0a2bcbdeeb81047badc607c4415d5c753bd683af"},
+    {file = "descartes-1.1.0.tar.gz", hash = "sha256:135a502146af5ed6ff359975e2ebc5fa4b71b5432c355c2cafdc6dea1337035b"},
+]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
     {file = "docutils-0.16.tar.gz", hash = "sha256:c2de3a60e9e7d07be26b7f2b00ca0309c207e06c100f9cc2a94931fc75a478fc"},
@@ -1820,6 +1879,10 @@ mistune = [
     {file = "mistune-0.8.4-py2.py3-none-any.whl", hash = "sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4"},
     {file = "mistune-0.8.4.tar.gz", hash = "sha256:59a3429db53c50b5c6bcc8a07f8848cb00d7dc8bdb431a4ab41920d201d4756e"},
 ]
+mizani = [
+    {file = "mizani-0.7.3-py3-none-any.whl", hash = "sha256:7f95d713e2bd28d51919e065d3453d470a654a0a219a7f777f8e9b6ed6e6ed35"},
+    {file = "mizani-0.7.3.tar.gz", hash = "sha256:f521300bd29ca918fcd629bc8ab50fa04e41bdbe00f6bcf74055d3c6273770a4"},
+]
 nbclient = [
     {file = "nbclient-0.5.3-py3-none-any.whl", hash = "sha256:e79437364a2376892b3f46bedbf9b444e5396cfb1bc366a472c37b48e9551500"},
     {file = "nbclient-0.5.3.tar.gz", hash = "sha256:db17271330c68c8c88d46d72349e24c147bb6f34ec82d8481a8f025c4d26589c"},
@@ -1869,6 +1932,10 @@ numpy = [
 packaging = [
     {file = "packaging-20.9-py2.py3-none-any.whl", hash = "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"},
     {file = "packaging-20.9.tar.gz", hash = "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5"},
+]
+palettable = [
+    {file = "palettable-3.3.0-py2.py3-none-any.whl", hash = "sha256:c3bf3f548fc228e86bd3d16928bbf8d621c1d1098791ceab446d0e3a5e1298d1"},
+    {file = "palettable-3.3.0.tar.gz", hash = "sha256:72feca71cf7d79830cd6d9181b02edf227b867d503bec953cf9fa91bf44896bd"},
 ]
 pandas = [
     {file = "pandas-1.2.4-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:c601c6fdebc729df4438ec1f62275d6136a0dd14d332fc0e8ce3f7d2aadb4dd6"},
@@ -1949,6 +2016,10 @@ pillow = [
     {file = "Pillow-8.4.0-pp37-pypy37_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:84c471a734240653a0ec91dec0996696eea227eafe72a33bd06c92697728046b"},
     {file = "Pillow-8.4.0-pp37-pypy37_pp73-win_amd64.whl", hash = "sha256:244cf3b97802c34c41905d22810846802a3329ddcb93ccc432870243211c79fc"},
     {file = "Pillow-8.4.0.tar.gz", hash = "sha256:b8e2f83c56e141920c39464b852de3719dfbfb6e3c99a2d8da0edf4fb33176ed"},
+]
+plotnine = [
+    {file = "plotnine-0.8.0-py3-none-any.whl", hash = "sha256:3c938093e20c6e68d1ee4591967a2e5093d185046bad88af00af81bf14215549"},
+    {file = "plotnine-0.8.0.tar.gz", hash = "sha256:39de59edcc28106761b65238647d0b1f6212ea7f3a78f8be0b846616db969276"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
